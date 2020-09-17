@@ -132,7 +132,7 @@ class LXeMainVolume : public G4PVPlacement
     G4LogicalVolume* fAir_log;
     G4LogicalVolume* fAir_in_log;
     G4LogicalVolume* fMPPC_log;
-    G4LogicalVolume* fWin_log[3];
+    G4LogicalVolume* fWin_log[1];
     G4LogicalVolume* fEnve_log;
 //    G4LogicalVolume* fTef_log;
     G4LogicalVolume* fSup_log;
@@ -143,15 +143,15 @@ class LXeMainVolume : public G4PVPlacement
     G4LogicalVolume* fRadiation_log;
 
     // Physical volumes
-		G4VPhysicalVolume* fScint_vol[3];
+		G4VPhysicalVolume* fScint_vol[1];
 		G4VPhysicalVolume* fScintbig_vol;
 		G4VPhysicalVolume* fGlice_vol;
 		G4VPhysicalVolume* fGlicebig_vol;
 		G4VPhysicalVolume* fGlice2_vol;
 		G4VPhysicalVolume* fGlice3_vol;
-		G4VPhysicalVolume* fMPPC_vol[3];
-		G4VPhysicalVolume* fWin_vol[3];
-		G4VPhysicalVolume* fEnve_vol[3];
+		G4VPhysicalVolume* fMPPC_vol[1];
+		G4VPhysicalVolume* fWin_vol[1];
+		G4VPhysicalVolume* fEnve_vol[1];
 	        G4VPhysicalVolume* fSup_vol;
 	        G4VPhysicalVolume* fWindow1_vol;
 		G4VPhysicalVolume* fWindow2_vol;

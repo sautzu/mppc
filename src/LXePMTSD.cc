@@ -111,7 +111,7 @@ G4bool LXePMTSD::ProcessHits_constStep(const G4Step* aStep,
   if(aStep->GetTrack()->GetCreatorProcess()->GetProcessName() != "Scintillation"){
  //std::cout<<"!"<<std::endl;
  return false;
-}
+  }
  
   //User replica number 1 since photocathode is a daughter volume
   //to the pmt which was replicated

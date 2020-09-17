@@ -41,11 +41,11 @@
 
 G4double m_posi = 3.0*mm;
 G4double x_posi = 0.0*mm;
-G4double z_posi = 8.0*mm;//-7.0/3.0*mm;//10.0 - 3.0*mm;//-20.0/4.; //3.1*mm;
+G4double z_posi = 0.0*mm;
 G4bool colli = false;
-const G4int scint_num = 3;
-const G4int scintsq_num = 3;
-const G4int mppc_num = 3;
+const G4int scint_num = 1;
+const G4int scintsq_num = 1;
+const G4int mppc_num = 1;
       G4double si = 5.;
 	
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -119,8 +119,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	G4double X = 0.*mm;
 	G4double Z = 0.*mm;
 
-//	G4double slide = 70.*mm;
-	G4double slide = -colli_width+70.*mm;
+	G4double slide = 70.*mm;
+//	G4double slide = -colli_width+70.*mm;
 	// Logic Position
 
 
@@ -131,53 +131,23 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 
 
-		scint_posi_x[0]=0.;
-		scint_posi_y[0]=-d/2.;
-		scint_posi_z[0]=-fScint_z-d;
-
-	      	scint_posi_x[1]=0.;
-		scint_posi_y[1]=-d/2.;
-//	      	scint_posi_y[0]=-d/2.*mm;
-	      	scint_posi_z[1]=0.;
-
-		scint_posi_x[2]=0.;
-		scint_posi_y[2]=-d/2.;
-		scint_posi_z[2]=fScint_z+d;
-
-
-//                        scint_posi_x[0]=0.;
-//                        scint_posi_y[0]=-d/2.;
-//	                scint_posi_z[0]=0.;
-////                        scint_posi_z[0]=3.+d/2.;
-
-
-//                      scint_posi_x[1]=0.;
-//                      scint_posi_y[1]=-d/2.;
-//                      scint_posi_z[1]=-3.-d/2.;
- 
-
-//	for(int i=0;i<scint_num;i++){
-//		scint_posi_x[i]=0.;
-//		scint_posi_y[i]=-d/2.;
-//		scint_posi_z[i]=-(scint_num-1)*(fScint_z/2.+d/2.)+i*(fScint_y+d/2.);
-//	}
-
-
-//	for(int i=0;i<scintsq_num;i++){
-//		for(int j=0;j<scintsq_num;j++){ 
-//			scint_posi_x[scintsq_num*i+j]=(-i+1)*(6.+d) + (scintsq_num-3.)*(3.+d/2.);
-//		}
-//	}
+//		scint_posi_x[0]=0.;
+//		scint_posi_y[0]=-d/2.;
+//		scint_posi_z[0]=-fScint_z-d;
 //
-//	for(int i=0;i<scint_num;i++){
-//		scint_posi_y[i]=-d/2.;
-//	}   
+//	      	scint_posi_x[1]=0.;
+//		scint_posi_y[1]=-d/2.;
+////	      	scint_posi_y[0]=-d/2.*mm;
+//	      	scint_posi_z[1]=0.;
 //
-//	for(int i=0;i<scintsq_num;i++){
-//		for(int j=0;j<scintsq_num;j++){ 
-//			scint_posi_z[scintsq_num*i+j]=(-j+1)*(6.+d) + (scintsq_num-3.)*(3.+d/2.);
-//		}
-//	}
+//		scint_posi_x[2]=0.;
+//		scint_posi_y[2]=-d/2.;
+//		scint_posi_z[2]=fScint_z+d;
+
+
+                        scint_posi_x[0]=0.;
+                        scint_posi_y[0]=-d/2.;
+	                scint_posi_z[0]=0.;
 
 
  //Scint(大きいの１つ)
@@ -196,73 +166,32 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
          G4double enve_posi_z[mppc_num];
  
 
-//	if(mppc_num == 1){
-//		for(int i=0;i<mppc_num;i++){
-//		  enve_posi_x[i] = scint_posi_x[i];
-//		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;// - 70.+fScint_y/2.+d/2.; //fScint_y/2.+ d/2. + enve_width/2. + win_width;
-//		  enve_posi_z[i] = scint_posi_z[i];
-//	      	}
-//	}
-//	else{
-//		for(int i=0;i<mppc_num;i++){
-//		  enve_posi_x[i] = scint_posi_x[i];
-//		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;// -70.+fScint_y/2.+d/2.;
-//		  enve_posi_z[i] = (-1+i)*fScint_z/2. - (-1+i)*mppc_height;
-//		}
-//	}
+	if(mppc_num == 1){
+		for(int i=0;i<mppc_num;i++){
+		  enve_posi_x[i] = scint_posi_x[i];
+		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
+		  enve_posi_z[i] = scint_posi_z[i];
+	      	}
+	}
+	else{
+		for(int i=0;i<mppc_num;i++){
+		  enve_posi_x[i] = scint_posi_x[i];
+		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
+		  enve_posi_z[i] = (-1+i)*fScint_z/2. - (-1+i)*mppc_height;
+		}
+	}
 	
 
-	for(int i=0;i<3;i++){
-		enve_posi_x[i] = scint_posi_x[i];
-		enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
-		enve_posi_z[i] = scint_posi_z[i]; // - 2*(-1+i)*mppc_height;
-	}
+//	for(int i=0;i<3;i++){
+//		enve_posi_x[i] = scint_posi_x[i];
+//		enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
+//		enve_posi_z[i] = scint_posi_z[i]; // - 2*(-1+i)*mppc_height;
+//	}
 //	for(int i=3;i<5;i++){
 //		enve_posi_x[i] = scint_posi_x[0] - 2*(7-2*i)*mppc_height;
 //		enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width/2.;
 //		enve_posi_z[i] = scint_posi_z[0];
 //	}
-
-	
-//	enve_posi_x[0] = scint_posi_x[0];
-//	enve_posi_y[0] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[0] = scint_posi_z[0] -2*mppc_height - 0.1;
-//
-//	enve_posi_x[1] = scint_posi_x[0];
-//	enve_posi_y[1] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[1] = scint_posi_z[0];
-//
-//	enve_posi_x[2] = scint_posi_x[0];
-//	enve_posi_y[2] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[2] = scint_posi_z[0] + 2*mppc_height + 0.1;
-//
-//	enve_posi_x[3] = scint_posi_x[0] - 2*mppc_height - 0.1;
-//	enve_posi_y[3] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[3] = scint_posi_z[0];
-//
-//	enve_posi_x[4] = scint_posi_x[0] + 2*mppc_height + 0.1;
-//	enve_posi_y[4] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[4] = scint_posi_z[0];
-
-//	enve_posi_x[0] = scint_posi_x[0];
-//	enve_posi_y[0] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[0] = scint_posi_z[0];
-//
-//	enve_posi_x[1] = scint_posi_x[0] + 2*mppc_height;
-//	enve_posi_y[1] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[1] = scint_posi_z[0] + 2*mppc_height;
-//
-//	enve_posi_x[2] = scint_posi_x[0] + 2*mppc_height;
-//	enve_posi_y[2] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[2] = scint_posi_z[0] - 2*mppc_height;
-//
-//	enve_posi_x[3] = scint_posi_x[0] - 2*mppc_height;
-//	enve_posi_y[3] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[3] = scint_posi_z[0] + 2*mppc_height;
-//
-//	enve_posi_x[4] = scint_posi_x[0] - 2*mppc_height;
-//	enve_posi_y[4] = fScint_y/2.+d/2.+enve_width/2.+win_width;
-//	enve_posi_z[4] = scint_posi_z[0] - 2*mppc_height;
 
 
          //4MPPC
@@ -281,14 +210,6 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 
 
-
-
-
-
-
-
-
-
 	// MPPC
 	G4double mppc_posi_x[mppc_num]; 
 	G4double mppc_posi_y[mppc_num]; 
@@ -301,91 +222,13 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 		mppc_posi_z[i] = -win_width/2.+mppc_width/2.;
 	}
 
-//	for(int i=0;i<mppc_num;i++){
-//		mppc_posi_x[i] = scint_posi_x[i];
-//		mppc_posi_y[i] = fScint_y/2.+ d/2. + mppc_width/2.;
-//		mppc_posi_z[i] = scint_posi_z[i];
-//	}
-
-//	mppc_posi_x[0] = 0.;
-////	mppc_posi_y[0] = 0.0;
-//	mppc_posi_y[0] = fScint_y/2. + d/2. + mppc_width/2.;
-////	mppc_posi_z[0] = - mppc_width/2.;
-//	mppc_posi_z[0] = (fScint_x+d)/2.;
-
-
-//	mppc_posi_x[1]=0.;
-////	mppc_posi_y[1] = 0.0;
-//	mppc_posi_y[1] = fScint_y/2. + d/2. + mppc_width/2.;
-////	mppc_posi_z[1] = win_width/2. - mppc_width/2.;
-//	mppc_posi_z[1] = -(fScint_x+d)/2.;
-	
-	
-//	for(int i=0;i<3;i++){
-//		for(int j=0;j<3;j++){ 
-//			mppc_posi_x[3*i+j] = (-i + 1)*(fScint_x + d) + X;
-//		}
-//	}
-//
-//	for(int i=0;i<mppc_num;i++){
-//		mppc_posi_y[i] = fScint_y/2. + d/2. + mppc_width/2.;
-//	}      
-//	
-//	for(int i=0;i<3;i++){
-//		for(int j=0;j<3;j++){ 
-//			mppc_posi_z[3*i+j] = (-j+1)* (fScint_x+d);//+Z-1.;
-//  		}
-//	}
-
-
 
 	//window
 	G4double win_posi_x[mppc_num];
 	G4double win_posi_y[mppc_num];
 	G4double win_posi_z[mppc_num];
 
-	//横に増やすver.
-//	for(int i=0;i<mppc_num;i++){
-//		win_posi_x[i] = 0.0;
-//		win_posi_y[i] = fScint_y/2. + d/2. + win_width/2.;// -70.+fScint_y/2.+d/2.*mm /*+ mppc_width/2. */;
-//	//	win_posi_y[i] = (fScint_x+d)/2. + mppc_width;
-//		win_posi_z[i] = scint_posi_z[i];
-////		win_posi_z[i] = (-1+i)*fScint_z/2. - (-1+i)*mppc_height;  //- enve_width/2. + win_width/2.;
-//	}
 
-
-//	for(int i=0;i<3;i++){
-//		win_posi_x[i] = scint_posi_x[0];
-//		win_posi_y[i] = fScint_y/2. + d/2. + win_width/2.;
-//		win_posi_z[i] = scint_posi_z[0] - 2*(-1+i)*(mppc_height+0.05);
-//	}
-//	for(int i=3;i<5;i++){
-//		win_posi_x[i] = scint_posi_x[0] + 2*(7-2*i)*(mppc_height+0.05);
-//		win_posi_y[i] = fScint_y/2. + d/2. + win_width/2.;
-//		win_posi_z[i] = scint_posi_z[0];
-//	}
-
-//        win_posi_x[0] = scint_posi_x[0];
-//        win_posi_y[0] = fScint_y/2.+d/2.+win_width/2.;
-//        win_posi_z[0] = scint_posi_z[0];
-//
-//        win_posi_x[1] = scint_posi_x[0] + 2*mppc_height;
-//        win_posi_y[1] = fScint_y/2.+d/2.+win_width/2.;
-//        win_posi_z[1] = scint_posi_z[0] + 2*mppc_height;
-//
-//        win_posi_x[2] = scint_posi_x[0] + 2*mppc_height;
-//        win_posi_y[2] = fScint_y/2.+d/2.+win_width/2.;
-//        win_posi_z[2] = scint_posi_z[0] - 2*mppc_height;
-//
-//        win_posi_x[3] = scint_posi_x[0] - 2*mppc_height;
-//        win_posi_y[3] = fScint_y/2.+d/2.+win_width/2.;
-//        win_posi_z[3] = scint_posi_z[0] + 2*mppc_height;
-//
-//        win_posi_x[4] = scint_posi_x[0] - 2*mppc_height;
-//        win_posi_y[4] = fScint_y/2.+d/2.+win_width/2.;
-//        win_posi_z[4] = scint_posi_z[0] - 2*mppc_height;
-
-	//行列状に増やすver.
 	for(int i=0;i<mppc_num;i++){ 
           win_posi_x[i] = scint_posi_x[i];
 	}
@@ -427,9 +270,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	G4double wood2_posi_z = 0.*mm;
 	// Fe1
 	G4double Fe1_posi_x = 0.*mm;
-//	G4double Fe1_posi_y = -fScint_y/2. - fe_width/2. - 0.2*mm;
-	G4double Fe1_posi_y = -fScint_y/2.-fe_width/2.-colli_width-0.2*mm;
-//	G4double Fe1_posi_y = -fScint_y/2.+fe_width/2.; //-70.*mm;
+	G4double Fe1_posi_y = -fScint_y/2. - fe_width/2. - 0.2*mm;
+//	G4double Fe1_posi_y = -fScint_y/2.-fe_width/2.-colli_width-0.2*mm;
 	G4double Fe1_posi_z = 0.*mm;
 	// Fe2
 	G4double Fe2_posi_x = 0.*mm;
@@ -439,8 +281,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	// Source
 	G4double source_posi_x = x_posi;
-//	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + slide + 0.01;
-	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.;
+	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + slide + 0.01;
+//	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.;
 //	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.-18.*mm;
 //	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + 0.01;//-0.02-d -fScint_y/2. -colli_width - radi_case_width/2.;//-colli_width + 5.5*mm + fScint_y/2. + fD_mtl + radi_case_width/2.; 
 	G4double source_posi_z = z_posi;
@@ -469,10 +311,6 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	// Wood
 	G4ThreeVector wood1_posi(wood1_posi_x, wood1_posi_y+slide, wood1_posi_z);
 	G4ThreeVector wood2_posi(wood2_posi_x, wood2_posi_y+slide, wood2_posi_z);
-//	G4ThreeVector wood3_posi(wood_height - wood_width/2., (wood1_posi_y+wood2_posi_y)/2.+slide, 0.);
-//	G4ThreeVector wood4_posi(-wood_height + wood_width/2., (wood1_posi_y+wood2_posi_y)/2.+slide, 0.);
-//	G4ThreeVector wood5_posi(0., (wood1_posi_y+wood2_posi_y)/2.+slide, wood_height - wood_width/2.);
-//	G4ThreeVector wood6_posi(0., (wood1_posi_y+wood2_posi_y)/2.+slide, -wood_height + wood_width/2.);
 	
 	// Fe
 	G4ThreeVector fe1_posi(Fe1_posi_x, Fe1_posi_y, Fe1_posi_z);
@@ -561,13 +399,9 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	
 	//collimator
 	//if(colli)
-	new G4PVPlacement(rm_x1,colli_posi,fCollimator_log,"collimator",fAir_in_log,false,0);
+//	new G4PVPlacement(rm_x1,colli_posi,fCollimator_log,"collimator",fAir_in_log,false,0);
 	new G4PVPlacement(0,wood1_posi,fWood_log,"Wood",fAir_in_log,false,0);
 	new G4PVPlacement(0,wood2_posi,fWood_log,"wood",fAir_in_log,false,0);
-//	new G4PVPlacement(0,wood3_posi,fWood1_log,"Wood3",fAir_log,false,0);
-//	new G4PVPlacement(0,wood4_posi,fWood1_log,"wood4",fAir_log,false,0);
-//	new G4PVPlacement(0,wood5_posi,fWood2_log,"Wood5",fAir_log,false,0);
-//	new G4PVPlacement(0,wood6_posi,fWood2_log,"wood6",fAir_log,false,0);
 
 	new G4PVPlacement(0,fe1_posi,fFe_log,"fe",fAir_in_log,false,0);  //no colli
 	new G4PVPlacement(0,fe2_posi,fFe_log,"fe",fAir_in_log,false,0);

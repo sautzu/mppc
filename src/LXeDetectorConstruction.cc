@@ -220,8 +220,8 @@ void LXeDetectorConstruction::DefineMaterials(){
 		silicone_RIND[i] = 1.453;
 		silica_RIND[i] = 1.453;
 		gso_RIND[i] = 1.85;
-//		gagg_RIND[i] = 1.93;
-		gagg_RIND[i] = 1.0;
+		gagg_RIND[i] = 1.93;
+//		gagg_RIND[i] = 1.0;
 		csi_RIND[i] = 1.79;
 		al_RIND[i] = 1.48;
 		vacuum_RIND[i] = 1.000293;

@@ -62,10 +62,10 @@ G4double scint_z = 20.0/2.*mm;
 //G4double y_position = -86.7*mm;
 //G4double y_position = -87.5-18*mm; //下
 //G4double y_position = -scint_y - 86.6-0.25-18.*mm;//下
-G4double y_position = -scint_y - 86.6-0.25*mm;//下
-//G4double y_position = scint_y + 36.01 + 70.*mm; //上
+//G4double y_position = -scint_y - 86.6-0.25*mm;//下
+G4double y_position = scint_y + 36.01 + 70.*mm; //上
 G4double x_position = 0.0*mm;
-G4double z_position = 8.0*mm;//-scint_z/2.; //3.1*mm;
+G4double z_position = 0.0*mm;//-scint_z/2.; //3.1*mm;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -130,7 +130,7 @@ for(int i=0;i<1;i++){
 //	z_test = r_test*sin(theta_test);
 
 	k1 =u;
-	k2 =(sqrt(1-(u*u)))*sin(psi2);
+	k2 =-(sqrt(1-(u*u)))*sin(psi2);
 	k3 =(sqrt(1-(u*u)))*cos(psi2);
 
 	X = CLHEP::RandFlat::shoot(-3.0,3.0);

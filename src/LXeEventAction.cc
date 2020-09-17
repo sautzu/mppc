@@ -163,7 +163,7 @@ void LXeEventAction::EndOfEventAction(const G4Event* anEvent){
 
 	if(TotalCount!=0){
 	//if(EDEP!=0){
-		std::ofstream ofs1("../jan/3mppc8mm.txt",std::ios::out | std::ios::app);
+		std::ofstream ofs1("../result/test.txt",std::ios::out | std::ios::app);
 		//EDEP = EDEP/2.; //EDEPは2回カウントしてるみたい
 		//EDEP = CLHEP::RandGauss::shoot(EDEP,0.1*EDEP);
 		ofs1 
@@ -172,8 +172,8 @@ void LXeEventAction::EndOfEventAction(const G4Event* anEvent){
 << Produce << " " 
 //<< EDEP << " " 
 << Photon_Sum[0] << " " 
-<< Photon_Sum[1] << " " 
-<< Photon_Sum[2] << " " 
+//<< Photon_Sum[1] << " " 
+//<< Photon_Sum[2] << " " 
 //<< Photon_Sum[3] << " " 
 //<< Photon_Sum[4] << " " 
 //<< Photon_Sum[5] << " " 
