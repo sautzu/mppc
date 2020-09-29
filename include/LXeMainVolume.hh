@@ -31,6 +31,8 @@
 #ifndef LXeMainVolume_H
 #define LXeMainVolume_H 1
 
+#include <memory>
+
 #include "G4PVPlacement.hh"
 #include "G4Box.hh"
 #include "G4Tubs.hh"
@@ -43,137 +45,128 @@
 #include "G4VPhysicalVolume.hh"
 
 #include "LXeDetectorConstruction.hh"
+#include "VolumeMPPC.hh"
 
 class LXeMainVolume : public G4PVPlacement
 {
-  public:
+public:
+  LXeMainVolume(G4RotationMatrix *pRot,
+                const G4ThreeVector &tlate,
+                G4LogicalVolume *pMotherLogical,
+                G4bool pMany,
+                G4int pCopyNo,
+                LXeDetectorConstruction *c);
 
-    LXeMainVolume(G4RotationMatrix *pRot,
-                 const G4ThreeVector &tlate,
-                 G4LogicalVolume *pMotherLogical,
-                 G4bool pMany,
-                 G4int pCopyNo,
-                 LXeDetectorConstruction* c);
+  //G4LogicalVolume* GetLogPhotoCath() {return fPmt_log;}
+  G4LogicalVolume *GetLogScint() { return fScint_log; }
+  G4LogicalVolume *GetLogScintbig() { return fScintbig_log; }
+  G4LogicalVolume* GetLogMPPC() { return mppc_vol->getMPPCLogical(); }
 
-    //G4LogicalVolume* GetLogPhotoCath() {return fPmt_log;}
-    G4LogicalVolume* GetLogScint()     {return fScint_log;}
-    G4LogicalVolume* GetLogScintbig()     {return fScintbig_log;}
-    G4LogicalVolume* GetLogMPPC()     {return fMPPC_log;}
+  std::vector<G4ThreeVector> GetPmtPositions() { return fPmtPositions; }
 
-    std::vector<G4ThreeVector> GetPmtPositions() {return fPmtPositions;}
+private:
+  void VisAttributes();
+  void SurfaceProperties();
 
-  private:
+  void PlacePMTs(G4LogicalVolume *pmt_Log,
+                 G4RotationMatrix *rot,
+                 G4double &a, G4double &b, G4double da,
+                 G4double db, G4double amin, G4double bmin,
+                 G4int na, G4int nb,
+                 G4double &x, G4double &y, G4double &z, G4int &k);
 
-    void VisAttributes();
-    void SurfaceProperties();
+  void CopyValues();
 
-    void PlacePMTs(G4LogicalVolume* pmt_Log,
-                   G4RotationMatrix* rot,
-                   G4double &a, G4double &b, G4double da,
-                   G4double db, G4double amin, G4double bmin,
-                   G4int na, G4int nb,
-                   G4double &x, G4double &y, G4double &z, G4int &k);
+  LXeDetectorConstruction *fConstructor;
 
-    void CopyValues();
+  std::unique_ptr<VolumeMPPC> mppc_vol;
 
-    LXeDetectorConstruction* fConstructor;
+  G4double fScint_x;
+  G4double fScint_y;
+  G4double fScint_z;
+  G4double fD_mtl;
+  G4int fNx;
+  G4int fNy;
+  G4int fNz;
+  G4double fOuterRadius_pmt;
+  G4bool fSphereOn;
+  G4double fRefl;
 
-    G4double fScint_x;
-    G4double fScint_y;
-    G4double fScint_z;
-    G4double fD_mtl;
-		G4int fNx;
-		G4int fNy;
-		G4int fNz;
-    G4double fOuterRadius_pmt;
-    G4bool fSphereOn;
-    G4double fRefl;
+  //Basic Volumes
+  G4Box *fScint_box;
+  G4Box *fScintbig_box;
+  G4Box *fWood_box;
+  //    G4Box* fWood1_box;
+  //    G4Box* fWood2_box;
+  G4Box *fFe_box;
+  G4Box *fABS1_box;
+  G4Box *fABS2_box;
+  G4Box *fGlice_box;
+  G4Box *fGlicebig_box;
+  G4Box *fGlice2_box;
+  G4Box *fGlice3_box;
+  G4Box *fAir_box;
+  G4Box *fAir_in_box;
+  //    G4Box* fTef_box;
+  G4Box *fSup_box;
+  G4Box *fMPPC_out_pre;
+  G4SubtractionSolid *fMPPC_out;
+  G4Box *fWindow_box;
+  G4Cons *fCollimator;
+  G4Tubs *fRadiation;
+  G4Tubs *fRadi_case;
 
-    //Basic Volumes
-    G4Box* fScint_box;
-    G4Box* fScintbig_box;
-    G4Box* fWood_box;
-//    G4Box* fWood1_box;
-//    G4Box* fWood2_box;
-    G4Box* fFe_box;
-    G4Box* fABS1_box;
-    G4Box* fABS2_box;
-    G4Box* fGlice_box;
-    G4Box* fGlicebig_box;
-    G4Box* fGlice2_box;
-    G4Box* fGlice3_box;
-    G4Box* fAir_box;
-    G4Box* fAir_in_box;
-    G4Box* fMPPC_box;
-    G4Box* fWin_box;
-    G4Box* fEnve_box;
-//    G4Box* fTef_box;
-    G4Box* fSup_box;
-    G4Box* fMPPC_out_pre;
-		G4SubtractionSolid* fMPPC_out;
-		G4Box* fWindow_box;
-		G4Cons* fCollimator;
-		G4Tubs* fRadiation;
-		G4Tubs* fRadi_case;
+  // Logical volumes
+  G4LogicalVolume *fScint_log;
+  G4LogicalVolume *fScintbig_log;
+  G4LogicalVolume *fWood_log;
+  //    G4LogicalVolume* fWood1_log;
+  //    G4LogicalVolume* fWood2_log;
+  G4LogicalVolume *fFe_log;
+  G4LogicalVolume *fABS1_log;
+  G4LogicalVolume *fABS2_log;
+  G4LogicalVolume *fGlice_log;
+  G4LogicalVolume *fGlicebig_log;
+  G4LogicalVolume *fGlice2_log;
+  G4LogicalVolume *fGlice3_log;
+  G4LogicalVolume *fAir_log;
+  G4LogicalVolume *fAir_in_log;
+  //    G4LogicalVolume* fTef_log;
+  G4LogicalVolume *fSup_log;
+  G4LogicalVolume *fOut_log;
+  G4LogicalVolume *fWindow_log;
+  G4LogicalVolume *fCollimator_log;
+  G4LogicalVolume *fSource_log;
+  G4LogicalVolume *fRadiation_log;
 
-    // Logical volumes
-    G4LogicalVolume* fScint_log;
-    G4LogicalVolume* fScintbig_log;
-    G4LogicalVolume* fWood_log;
-//    G4LogicalVolume* fWood1_log;
-//    G4LogicalVolume* fWood2_log;
-    G4LogicalVolume* fFe_log;
-    G4LogicalVolume* fABS1_log;
-    G4LogicalVolume* fABS2_log;
-    G4LogicalVolume* fGlice_log;
-    G4LogicalVolume* fGlicebig_log;
-    G4LogicalVolume* fGlice2_log;
-    G4LogicalVolume* fGlice3_log;
-    G4LogicalVolume* fAir_log;
-    G4LogicalVolume* fAir_in_log;
-    G4LogicalVolume* fMPPC_log;
-    G4LogicalVolume* fWin_log[1];
-    G4LogicalVolume* fEnve_log;
-//    G4LogicalVolume* fTef_log;
-    G4LogicalVolume* fSup_log;
-    G4LogicalVolume* fOut_log;
-    G4LogicalVolume* fWindow_log;
-    G4LogicalVolume* fCollimator_log;
-    G4LogicalVolume* fSource_log;
-    G4LogicalVolume* fRadiation_log;
+  // Physical volumes
+  G4VPhysicalVolume *fScint_vol[1];
+  G4VPhysicalVolume *fScintbig_vol;
+  G4VPhysicalVolume *fGlice_vol;
+  G4VPhysicalVolume *fGlicebig_vol;
+  G4VPhysicalVolume *fGlice2_vol;
+  G4VPhysicalVolume *fGlice3_vol;
+  G4VPhysicalVolume *fSup_vol;
+  G4VPhysicalVolume *fWindow1_vol;
+  G4VPhysicalVolume *fWindow2_vol;
+  G4VPhysicalVolume *fWindow3_vol;
+  G4VPhysicalVolume *fWindow4_vol;
+  G4VPhysicalVolume *fWindow5_vol;
+  G4VPhysicalVolume *fWindow6_vol;
+  G4VPhysicalVolume *fWindow7_vol;
+  G4VPhysicalVolume *fWindow8_vol;
+  G4VPhysicalVolume *fOut1_vol;
+  G4VPhysicalVolume *fOut2_vol;
+  G4VPhysicalVolume *fOut3_vol;
+  G4VPhysicalVolume *fOut4_vol;
+  G4VPhysicalVolume *fOut5_vol;
+  G4VPhysicalVolume *fOut6_vol;
+  G4VPhysicalVolume *fOut7_vol;
+  G4VPhysicalVolume *fOut8_vol;
+  G4VPhysicalVolume *fAir_vol;
 
-    // Physical volumes
-		G4VPhysicalVolume* fScint_vol[1];
-		G4VPhysicalVolume* fScintbig_vol;
-		G4VPhysicalVolume* fGlice_vol;
-		G4VPhysicalVolume* fGlicebig_vol;
-		G4VPhysicalVolume* fGlice2_vol;
-		G4VPhysicalVolume* fGlice3_vol;
-		G4VPhysicalVolume* fMPPC_vol[1];
-		G4VPhysicalVolume* fWin_vol[1];
-		G4VPhysicalVolume* fEnve_vol[1];
-	        G4VPhysicalVolume* fSup_vol;
-	        G4VPhysicalVolume* fWindow1_vol;
-		G4VPhysicalVolume* fWindow2_vol;
-		G4VPhysicalVolume* fWindow3_vol;
-		G4VPhysicalVolume* fWindow4_vol;
-		G4VPhysicalVolume* fWindow5_vol;
-		G4VPhysicalVolume* fWindow6_vol;
-		G4VPhysicalVolume* fWindow7_vol;
-		G4VPhysicalVolume* fWindow8_vol;
-		G4VPhysicalVolume* fOut1_vol;
-		G4VPhysicalVolume* fOut2_vol;
-		G4VPhysicalVolume* fOut3_vol;
-		G4VPhysicalVolume* fOut4_vol;
-		G4VPhysicalVolume* fOut5_vol;
-		G4VPhysicalVolume* fOut6_vol;
-		G4VPhysicalVolume* fOut7_vol;
-		G4VPhysicalVolume* fOut8_vol;
-		G4VPhysicalVolume* fAir_vol;
-
-    // Sensitive Detectors positions
-    std::vector<G4ThreeVector> fPmtPositions;
-
+  // Sensitive Detectors positions
+  std::vector<G4ThreeVector> fPmtPositions;
 };
 
 #endif
