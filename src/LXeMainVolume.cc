@@ -43,9 +43,9 @@ G4double m_posi = 3.0*mm;
 G4double x_posi = 0.0*mm;
 G4double z_posi = 0.0*mm;
 G4bool colli = false;
-const G4int scint_num = 1;
-const G4int scintsq_num = 1;
-const G4int mppc_num = 1;
+const G4int scint_num = 3;
+const G4int scintsq_num = 3;
+const G4int mppc_num = 3;
       G4double si = 5.;
 	
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -135,19 +135,18 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 //		scint_posi_y[0]=-d/2.;
 //		scint_posi_z[0]=-fScint_z-d;
 //
-//	      	scint_posi_x[1]=0.;
-//		scint_posi_y[1]=-d/2.;
-////	      	scint_posi_y[0]=-d/2.*mm;
-//	      	scint_posi_z[1]=0.;
-//
-//		scint_posi_x[2]=0.;
-//		scint_posi_y[2]=-d/2.;
-//		scint_posi_z[2]=fScint_z+d;
+	scint_posi_x[1]=0.;
+   	scint_posi_y[0]=-d/2.;
+   	scint_posi_z[1]=0.;
+
+	scint_posi_x[2]=0.;
+	scint_posi_y[2]=-d/2.;
+	scint_posi_z[2]=fScint_z+d;
 
 
-                        scint_posi_x[0]=0.;
-                        scint_posi_y[0]=-d/2.;
-	                scint_posi_z[0]=0.;
+    scint_posi_x[0]=0.;
+    scint_posi_y[0]=-d/2.;
+	scint_posi_z[0]=0.;
 
 
  //Scint(大きいの１つ)
@@ -368,7 +367,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 //	fWood2_log = new G4LogicalVolume(fWood2_box,	G4Material::GetMaterial("Wood"),	"wood_log", 0,0,0);
 	fFe_log = new G4LogicalVolume(fFe_box,	G4Material::GetMaterial("Al2"),	"fe_log", 0,0,0);
 	fGlice_log = new G4LogicalVolume(fGlice_box,	G4Material::GetMaterial("Silica"),	"glice_log", 0,0,0);
-//	fGlicebig_log = new G4LogicalVolume(fGlicebig_box,	G4Material::GetMaterial("Silica"),	"glicebig_log", 0,0,0);
+	fGlicebig_log = new G4LogicalVolume(fGlicebig_box,	G4Material::GetMaterial("Silica"),	"glicebig_log", 0,0,0);
 	fMPPC_log = new G4LogicalVolume(fMPPC_box,	G4Material::GetMaterial("Al"),	"mppc_log", 0,0,0);
 	for(int i=0;i<mppc_num;i++){
 	   fWin_log[i] = new G4LogicalVolume(fWin_box,	G4Material::GetMaterial("Silicone"),	"win_log",0,0,0);
@@ -383,18 +382,18 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
   new G4PVPlacement(0,radi_posi,fRadiation_log,"radiation",fSource_log,false,0);
 	
 	//scintillator(複数個)
-	for(int i=0;i<scint_num;i++){
-	  fScint_vol[i] = new G4PVPlacement(0,{scint_posi_x[i],scint_posi_y[i],scint_posi_z[i]},fScint_log,"scintillator",fGlice_log,false,0);
-	}  
+	//for(int i=0;i<scint_num;i++){
+	//  fScint_vol[i] = new G4PVPlacement(0,{scint_posi_x[i],scint_posi_y[i],scint_posi_z[i]},fScint_log,"scintillator",fGlice_log,false,0);
+	//}  
 
 	//scintillator(大きいの)
-//	fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlice_log,false,0);
+	fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlice_log,false,0);
 
 
 	//glice(複数個)
-	fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
+	//fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
 //	//glice(大きいの)
-//	fGlicebig_vol = new G4PVPlacement(0,glice_posi,fGlicebig_log,"glice",fAir_in_log,false,0);
+	fGlicebig_vol = new G4PVPlacement(0,glice_posi,fGlicebig_log,"glice",fAir_in_log,false,0);
 	
 	
 	//collimator
@@ -446,10 +445,10 @@ void LXeMainVolume::CopyValues(){
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void LXeMainVolume::VisAttributes(){
-	G4VisAttributes* scint_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
-	fScint_log->SetVisAttributes(scint_va);
+	//G4VisAttributes* scint_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
+	//fScint_log->SetVisAttributes(scint_va);
 	G4VisAttributes* scintbig_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
-	fScintbig_log->SetVisAttributes(scint_va);
+	fScintbig_log->SetVisAttributes(scintbig_va);
 	G4VisAttributes* mppc_va = new G4VisAttributes(G4Colour(0.2,0.4,0.2));
 	fMPPC_log->SetVisAttributes(mppc_va);
 	G4VisAttributes* win_va = new G4VisAttributes(G4Colour(0.4,0.4,0.6));

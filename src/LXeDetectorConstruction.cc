@@ -419,7 +419,7 @@ void LXeDetectorConstruction::ConstructSDandField() {
     fScint_SD.Put(scint_SD);
   }
   G4SDManager::GetSDMpointer()->AddNewDetector(fScint_SD.Get());
-  SetSensitiveDetector(fMainVolume->GetLogScint(), fScint_SD.Get());
+  SetSensitiveDetector(fMainVolume->GetLogScintbig(), fScint_SD.Get());
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
