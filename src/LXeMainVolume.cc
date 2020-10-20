@@ -230,14 +230,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	for(int i=0;i<mppc_num;i++){ 
           win_posi_x[i] = scint_posi_x[i];
-	}
-
-	for(int i=0;i<mppc_num;i++){
           win_posi_y[i] = fScint_y/2. + d/2. + win_width/2.;
-	}
-
-	for(int i=0;i<mppc_num;i++){
-          win_posi_z[i] = scint_posi_z[i];
+          win_posi_z[i] = enve_posi_z[i];
 	}
 	
 
@@ -368,10 +362,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	fFe_log = new G4LogicalVolume(fFe_box,	G4Material::GetMaterial("Al2"),	"fe_log", 0,0,0);
 	fGlice_log = new G4LogicalVolume(fGlice_box,	G4Material::GetMaterial("Silica"),	"glice_log", 0,0,0);
 	fGlicebig_log = new G4LogicalVolume(fGlicebig_box,	G4Material::GetMaterial("Silica"),	"glicebig_log", 0,0,0);
-	fMPPC_log = new G4LogicalVolume(fMPPC_box,	G4Material::GetMaterial("Al"),	"mppc_log", 0,0,0);
-	for(int i=0;i<mppc_num;i++){
-	   fWin_log[i] = new G4LogicalVolume(fWin_box,	G4Material::GetMaterial("Silicone"),	"win_log",0,0,0);
-	}
+	fMPPC_log = new G4LogicalVolume(fMPPC_box,	G4Material::GetMaterial("Al"),"mppc_log", 0,0,0);
+	fWin_log = new G4LogicalVolume(fWin_box,	G4Material::GetMaterial("Silicone"),"win_log",0,0,0);
 	fEnve_log = new G4LogicalVolume(fEnve_box,	G4Material::GetMaterial("ABS"),	"enve_log",0,0,0);
 	fCollimator_log = new G4LogicalVolume(fCollimator,	G4Material::GetMaterial("Pb"),	"colli_log", 0,0,0);
 	fSup_log = new G4LogicalVolume(fSup_box,	G4Material::GetMaterial("Al2"),	"sup_log",0,0,0);
@@ -418,10 +410,10 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
   //is only a very rough approximation of the real thing since it only
   //absorbs or detects the photons based on the efficiency set below
   
+	fMPPC_vol = new G4PVPlacement(0,{mppc_posi_x[0],mppc_posi_y[0],mppc_posi_z[0]},fMPPC_log,"MPPC",fWin_log,false,0);
 	for(int i=0;i<mppc_num;i++){	
-	fEnve_vol[i] = new G4PVPlacement(rm_x1,{enve_posi_x[i],enve_posi_y[i],enve_posi_z[i]},fEnve_log,"Envelope",fAir_in_log,false,0);
-	fWin_vol[i] = new G4PVPlacement(rm_x1,{win_posi_x[i],win_posi_y[i],win_posi_z[i]},fWin_log[i],"Window",fAir_in_log,false,0);
-	fMPPC_vol[i] = new G4PVPlacement(0,{mppc_posi_x[i],mppc_posi_y[i],mppc_posi_z[i]},fMPPC_log,"MPPC",fWin_log[i],false,i+1);
+		fEnve_vol[i] = new G4PVPlacement(rm_x1,{enve_posi_x[i],enve_posi_y[i],enve_posi_z[i]},fEnve_log,"Envelope",fAir_in_log,false,0);
+		fWin_vol[i] = new G4PVPlacement(rm_x1,{win_posi_x[i],win_posi_y[i],win_posi_z[i]},fWin_log,"Window",fAir_in_log,false,0);
 	}
       		// rm_x1
 	fAir_vol = new G4PVPlacement(0,center_posi,fAir_in_log,"airin",fAir_log,false,8);
@@ -452,9 +444,7 @@ void LXeMainVolume::VisAttributes(){
 	G4VisAttributes* mppc_va = new G4VisAttributes(G4Colour(0.2,0.4,0.2));
 	fMPPC_log->SetVisAttributes(mppc_va);
 	G4VisAttributes* win_va = new G4VisAttributes(G4Colour(0.4,0.4,0.6));
-	for(int i=0;i<mppc_num;i++){
-	   fWin_log[i]->SetVisAttributes(win_va);
-	}
+	fWin_log->SetVisAttributes(win_va);
 	G4VisAttributes* enve_va = new G4VisAttributes(G4Colour(0.8,0.8,0.8));
 	fEnve_log->SetVisAttributes(enve_va);
 	G4VisAttributes* colli_va = new G4VisAttributes(G4Colour(0.4,0.4,0.6));
