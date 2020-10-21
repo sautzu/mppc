@@ -8,28 +8,23 @@
 
 VolumeMPPC::VolumeMPPC()
 {
-    local_height = 6.0 * mm;
-    local_width = 2.1 * mm;
-
     mppc_height = 3.0 * mm;
     mppc_width = 0.05 * mm;
 
-    win_longside = 6.0 * mm;
-    win_shortside = 6.0 * mm;
+    win_longside = 5.0 * mm;
+    win_shortside = 5.0 * mm;
     win_width = 0.1 * mm;
 
     enve_longside = 6.0 * mm;
     enve_shortside = 6.0 * mm;
-    enve_width = 2.0 * mm;
+    enve_width = 2.1 * mm;
 
     //形の定義
-    fLocal_box = new G4Box("mppc_local", local_height / 2., local_height / 2., local_width / 2.);
     fMPPC_box = new G4Box("mppc_box", mppc_height / 2., mppc_height / 2., mppc_width / 2.);
     fWin_box = new G4Box("Win_box", win_longside / 2., win_shortside / 2., win_width / 2.);
     fEnve_box = new G4Box("Enve_box", enve_longside / 2., enve_shortside / 2., enve_width / 2.);
 
     //物質の定義
-    fLocal_log = new G4LogicalVolume(fLocal_box, G4Material::GetMaterial("Air"), "Air", 0, 0, 0);
     fMPPC_log = new G4LogicalVolume(fMPPC_box, G4Material::GetMaterial("Al"), "mppc_log", 0, 0, 0);
     fWin_log = new G4LogicalVolume(fWin_box, G4Material::GetMaterial("Silicone"), "win_log", 0, 0, 0);
     fEnve_log = new G4LogicalVolume(fEnve_box, G4Material::GetMaterial("ABS"), "enve_log", 0, 0, 0);
@@ -37,16 +32,15 @@ VolumeMPPC::VolumeMPPC()
     //MPPC全体の定義
     G4ThreeVector MPPC_posi(0, 0, 1.025 * mm);
     G4ThreeVector win_posi(0, 0, 1.0 * mm);
-    G4ThreeVector Enve_posi(0, 0, -0.05 * mm);
 
-    fWin_phy = new G4PVPlacement(0, win_posi, fWin_log, "Window", fLocal_log, false, 0);
-    fEnve_phy = new G4PVPlacement(0, Enve_posi, fEnve_log, "Enve", fLocal_log, false, 0);
-    fMPPC_phy = new G4PVPlacement(0, MPPC_posi, fMPPC_log, "MPPC", fLocal_log, false, 0);
+    fWin_phy = new G4PVPlacement(0, win_posi, fWin_log, "Window", fEnve_log, false, 0);
+    fMPPC_phy = new G4PVPlacement(0, MPPC_posi, fMPPC_log, "MPPC", fEnve_log, false, 0);
+    fEnve_phy = new G4PVPlacement(0, G4ThreeVector(), fEnve_log, "Enve", 0, false, 0);
 }
 
 G4LogicalVolume *VolumeMPPC::getLogicalVolume()
 {
-    return fLocal_log;
+    return fEnve_log;
 }
 
 G4LogicalVolume *VolumeMPPC::getMPPCLogical()
@@ -79,7 +73,6 @@ void VolumeMPPC::SurfaceProperties()
     Window_Surface->SetMaterialPropertiesTable(Window_PT);
 
     G4LogicalBorderSurface *surface1 = new G4LogicalBorderSurface("Window_surf", fWin_phy, fEnve_phy, Window_Surface);
-    //TODO:windowとAirの境界
 
     //mppcの反射設定(光子感度)
     G4double MPPC_ReR[] = {1.92, 1.92};
