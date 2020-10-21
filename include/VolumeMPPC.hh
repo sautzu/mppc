@@ -23,13 +23,11 @@ public:
 
 private:
     //Solid
-    G4Box *fLocal_box;
     G4Box *fMPPC_box;
     G4Box *fWin_box;
     G4Box *fEnve_box;
 
     //LogicalVolume
-    G4LogicalVolume *fLocal_log;
     G4LogicalVolume *fMPPC_log;
     G4LogicalVolume *fWin_log;
     G4LogicalVolume *fEnve_log;
@@ -38,10 +36,6 @@ private:
     G4PVPlacement *fMPPC_phy;
     G4PVPlacement *fWin_phy;
     G4PVPlacement *fEnve_phy;
-
-    //LocalWorld
-    G4double local_height;
-    G4double local_width;
 
     //MPPC
     G4double mppc_height;
