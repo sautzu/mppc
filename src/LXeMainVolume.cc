@@ -413,7 +413,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	fMPPC_vol = new G4PVPlacement(0,{mppc_posi_x[0],mppc_posi_y[0],mppc_posi_z[0]},fMPPC_log,"MPPC",fWin_log,false,0);
 	for(int i=0;i<mppc_num;i++){	
 		fEnve_vol[i] = new G4PVPlacement(rm_x1,{enve_posi_x[i],enve_posi_y[i],enve_posi_z[i]},fEnve_log,"Envelope",fAir_in_log,false,0);
-		fWin_vol[i] = new G4PVPlacement(rm_x1,{win_posi_x[i],win_posi_y[i],win_posi_z[i]},fWin_log,"Window",fAir_in_log,false,0);
+		fWin_vol[i] = new G4PVPlacement(rm_x1,{win_posi_x[i],win_posi_y[i],win_posi_z[i]},fWin_log,"Window",fAir_in_log,false,i+1);
 	}
       		// rm_x1
 	fAir_vol = new G4PVPlacement(0,center_posi,fAir_in_log,"airin",fAir_log,false,8);
