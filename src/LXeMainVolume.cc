@@ -379,12 +379,12 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	//}  
 
 	//scintillator(大きいの)
-	fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlice_log,false,0);
+	fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlicebig_log,false,0);
 
 
 	//glice(複数個)
 	//fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
-//	//glice(大きいの)
+	//glice(大きいの)
 	fGlicebig_vol = new G4PVPlacement(0,glice_posi,fGlicebig_log,"glice",fAir_in_log,false,0);
 	
 	
