@@ -556,7 +556,7 @@ void LXeMainVolume::SurfaceProperties(){
     new G4OpticalSurface("GliceSurface",glisur,groundbackpainted,dielectric_dielectric);
 	Glice_Surface->SetMaterialPropertiesTable(Glice_PT);
 
-  new G4LogicalBorderSurface("Glice_surf",fGlice_vol,fAir_vol,Glice_Surface);
+  new G4LogicalBorderSurface("Glice_surf",fGlicebig_vol,fAir_vol,Glice_Surface);
 
   //**Windowの反射設定 (Envelope周り)
          G4double Window_RIND[] = {1.0,1.0};
