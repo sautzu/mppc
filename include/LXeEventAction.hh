@@ -37,6 +37,8 @@
 #include "globals.hh"
 #include "G4ThreeVector.hh"
 
+extern G4String resultFile;
+
 class G4Event;
 class LXeRecorderBase;
 
