@@ -176,7 +176,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 		for(int i=0;i<mppc_num;i++){
 		  enve_posi_x[i] = scint_posi_x[i];
 		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
-		  enve_posi_z[i] = (-1+i)*fScint_z/2. - (-1+i)*mppc_height;
+		  enve_posi_z[i] = (-1+i)*fScint_z;
 		}
 	}
 	
