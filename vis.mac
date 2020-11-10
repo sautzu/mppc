@@ -6,6 +6,7 @@
 #
 /run/verbose 2
 /control/verbose 2
+/run/initialize
 #
 # Create a scene handler/viewer for a specific graphics system
 #    The compound command "/vis/open <vis-driver-name>"
@@ -45,5 +46,4 @@
 # Requests viewer to accumulate hits, tracks, etc. at end of event. 
 # detector remains or is redrawn.
 /vis/scene/endOfEventAction accumulate
-/run/initialize
 #/run/beamOn 1000
