@@ -332,14 +332,14 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
  
   //*************************** housing and scintillator
   fScint_box 		= new G4Box("scint_box",fScint_x/2.,fScint_y/2.,fScint_z/2.);
-  fScintbig_box 	= new G4Box("scintbig_box",num*fScint_x/2.+(num-1)*d/2.,fScint_y/2.,num*fScint_z/2.+(num-1)*d/2.);
+  fScintbig_box 	= new G4Box("scintbig_box",fScint_x/2.,fScint_y/2.,num*fScint_z/2.+(num-1)*d/2.);
   fWood_box 		= new G4Box("wood_box",wood_height/2.,wood_width/2.,wood_height/2.);
 //  fWood1_box 		= new G4Box("wood_box",wood_width/2.,wood_height/2. - wood_width/2.,wood_height/2. - wood_width/2.); //追加
 //  fWood2_box 		= new G4Box("wood_box",wood_height/2. - wood_width/2.,wood_height/2. - wood_width/2.,wood_width/2.); //追加
   fFe_box 		= new G4Box("fe_box",fe_height/2.,fe_width/2.*mm,120./2.);
 //  fGlice_box 		= new G4Box("glice_box",num*fScint_x/2.+(num-1.)*d/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
   fGlice_box 		= new G4Box("glice_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
-  fGlicebig_box		= new G4Box("glicebig_box",num*fScint_x/2.+(num-1.)*d/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
+  fGlicebig_box		= new G4Box("glicebig_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
   fAir_box 	= new G4Box("air_box",air_x/2.,air_y/2.,air_z/2.);
   fAir_in_box 	= new G4Box("air_in_box",air_in_x/2.,air_in_y/2.,air_in_z/2.);
   fMPPC_box	= new G4Box("mppc_box",mppc_height/2.,mppc_height/2.,mppc_width/2.);  //rm_x1
