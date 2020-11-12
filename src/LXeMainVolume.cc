@@ -390,7 +390,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	
 	//collimator
 	//if(colli)
-//	new G4PVPlacement(rm_x1,colli_posi,fCollimator_log,"collimator",fAir_in_log,false,0);
+	new G4PVPlacement(rm_x1,colli_posi,fCollimator_log,"collimator",fAir_in_log,false,0);
 	new G4PVPlacement(0,wood1_posi,fWood_log,"Wood",fAir_in_log,false,0);
 	new G4PVPlacement(0,wood2_posi,fWood_log,"wood",fAir_in_log,false,0);
 
