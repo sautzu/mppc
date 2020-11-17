@@ -274,8 +274,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	// Source
 	G4double source_posi_x = x_posi;
-	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + slide + 0.01;
-//	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.;
+//	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + slide + 0.01;
+	G4double source_posi_y = -colli_width - radi_case_width / 2. - fScint_y / 2. - fe_width - d / 2;
 //	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.-18.*mm;
 //	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + 0.01;//-0.02-d -fScint_y/2. -colli_width - radi_case_width/2.;//-colli_width + 5.5*mm + fScint_y/2. + fD_mtl + radi_case_width/2.; 
 	G4double source_posi_z = z_posi;
