@@ -251,7 +251,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	
 	// Collimator
 	G4double colli_posi_x = x_posi;
-	G4double colli_posi_y = -colli_width / 2. - fScint_y / 2. - d / 2; //5.5*mm;
+	G4double colli_posi_y = -colli_width / 2. - fScint_y / 2. - d; //5.5*mm;
 	G4double colli_posi_z = z_posi;
 	// Wood1
 	G4double wood1_posi_x = 0.*mm;
@@ -264,7 +264,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	// Fe1
 	G4double Fe1_posi_x = 0.*mm;
 //	G4double Fe1_posi_y = -fScint_y/2. - fe_width/2. - 0.2*mm;
-	G4double Fe1_posi_y = -fScint_y / 2. - fe_width / 2. - colli_width - d / 2;
+	G4double Fe1_posi_y = -fScint_y / 2. - fe_width / 2. - colli_width - d;
 	G4double Fe1_posi_z = 0.*mm;
 	// Fe2
 	G4double Fe2_posi_x = 0.*mm;
@@ -275,7 +275,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	// Source
 	G4double source_posi_x = x_posi;
 //	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + slide + 0.01;
-	G4double source_posi_y = -colli_width - radi_case_width / 2. - fScint_y / 2. - fe_width - d / 2;
+	G4double source_posi_y = -colli_width - radi_case_width / 2. - fScint_y / 2. - fe_width - d;
 //	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.-18.*mm;
 //	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + 0.01;//-0.02-d -fScint_y/2. -colli_width - radi_case_width/2.;//-colli_width + 5.5*mm + fScint_y/2. + fD_mtl + radi_case_width/2.; 
 	G4double source_posi_z = z_posi;
