@@ -60,7 +60,7 @@ G4double scint_y = 5.0/2.*mm;
 G4double scint_z = 20.0/2.*mm;
 
 //G4double y_position = -86.7*mm;
-G4double y_position = -87.5-18*mm; //下
+G4double y_position = -89.6*mm; //下
 //G4double y_position = -scint_y - 86.6-0.25-18.*mm;//下
 //G4double y_position = -scint_y - 86.6-0.25*mm;//下
 //G4double y_position = scint_y + 36.01 + 70.*mm; //上
