@@ -135,18 +135,18 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 //		scint_posi_y[0]=-d/2.;
 //		scint_posi_z[0]=-fScint_z-d;
 //
+	scint_posi_x[0]=0.;
+   	scint_posi_y[0]=-d/2;
+   	scint_posi_z[0]=0.;
+
 	scint_posi_x[1]=0.;
-   	scint_posi_y[0]=-d/2.;
-   	scint_posi_z[1]=0.;
-
-	scint_posi_x[2]=0.;
-	scint_posi_y[2]=-d/2.;
-	scint_posi_z[2]=fScint_z+d;
+	scint_posi_y[1]=-d/2;
+	scint_posi_z[1]=fScint_z+d;
 
 
-    scint_posi_x[0]=0.;
-    scint_posi_y[0]=-d/2.;
-	scint_posi_z[0]=0.;
+    scint_posi_x[2]=0.;
+    scint_posi_y[2]=-d/2;
+	scint_posi_z[2]=-fScint_z-d;
 
 
  //Scint(大きいの１つ)
