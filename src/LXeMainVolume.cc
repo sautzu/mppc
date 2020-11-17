@@ -311,7 +311,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	
 	// Source
 	G4ThreeVector source_posi(source_posi_x, source_posi_y, source_posi_z);
-	G4ThreeVector radi_posi(0.*mm, 0.*mm, -radi_case_width/3.);
+	G4ThreeVector radi_posi(0.*mm, 0.*mm, radi_case_width/3.);
 
 	// Supporter
 	G4ThreeVector sup_posi(sup_posi_x,sup_posi_y,sup_posi_z);
