@@ -251,7 +251,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	
 	// Collimator
 	G4double colli_posi_x = x_posi;
-	G4double colli_posi_y = -0.01-colli_width/2. -d - fScint_y/2.;//5.5*mm;
+	G4double colli_posi_y = -colli_width / 2. - fScint_y / 2. - d / 2; //5.5*mm;
 	G4double colli_posi_z = z_posi;
 	// Wood1
 	G4double wood1_posi_x = 0.*mm;
