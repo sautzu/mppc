@@ -263,8 +263,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	G4double wood2_posi_z = 0.*mm;
 	// Fe1
 	G4double Fe1_posi_x = 0.*mm;
-	G4double Fe1_posi_y = -fScint_y/2. - fe_width/2. - 0.2*mm;
-//	G4double Fe1_posi_y = -fScint_y/2.-fe_width/2.-colli_width-0.2*mm;
+//	G4double Fe1_posi_y = -fScint_y/2. - fe_width/2. - 0.2*mm;
+	G4double Fe1_posi_y = -fScint_y / 2. - fe_width / 2. - colli_width - d / 2;
 	G4double Fe1_posi_z = 0.*mm;
 	// Fe2
 	G4double Fe2_posi_x = 0.*mm;
