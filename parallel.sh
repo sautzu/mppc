@@ -6,3 +6,4 @@ if [ $# -ne 2 ]; then
 fi
 
 seq -w $1 | xargs -P$1 -I{} ./LXe ../result/test{}.txt $2
+seq -w $1 | xargs -I{}  cat ../result/test{}.txt >> ../result/test.txt
