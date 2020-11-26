@@ -18,7 +18,7 @@ VolumeScint::VolumeScint()
     fScint_log = new G4LogicalVolume(fScint_Sol, G4Material::GetMaterial("GAGG"), "Scint", 0, 0, 0);
     fmother_log = new G4LogicalVolume(fmother_Sol, G4Material::GetMaterial("Air"), "Scint_mother", 0, 0, 0);
 
-    fScint_phy = new G4PVPlacement(0, G4ThreeVector(), "Scint", fmother_log, 0, false, 0);
+    fScint_phy = new G4PVPlacement(0, G4ThreeVector(), fScint_log, "Scint", fmother_log, false, 0);
 }
 
 G4LogicalVolume *VolumeScint::getLogicalVolume()
