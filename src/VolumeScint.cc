@@ -8,11 +8,14 @@
 VolumeScint::VolumeScint()
 {
 
-    fScint_x = 20.0 * mm;
+    fScint_x = 30.0 * mm;
     fScint_y = 5.0 * mm;
-    fScint_z = 20.0 * mm;
+    fScint_z = 30.0 * mm;
+	G4RotationMatrix *rm1 = new G4RotationMatrix();
+	rm1->rotateY(-30. * deg);
 
-    fScint_Sol = new G4Box("Scint_box", fScint_x / 2, fScint_y / 2, fScint_z / 2);
+    G4Box *box = new G4Box("Scint_box", fScint_x / 2, fScint_y / 2, fScint_z / 2);
+    fScint_Sol = new G4SubtractionSolid("Scint_A", box, box, rm1, {10. * mm, 0, 0});
     fmother_Sol = new G4Box("Scint_mother", fScint_x / 2, fScint_y / 2, fScint_z / 2);
 
     fScint_log = new G4LogicalVolume(fScint_Sol, G4Material::GetMaterial("GAGG"), "Scint", 0, 0, 0);

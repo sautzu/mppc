@@ -3,6 +3,7 @@
  **/
 
 #include "G4PVPlacement.hh"
+#include "G4SubtractionSolid.hh"
 #include "G4Box.hh"
 #include "G4LogicalVolume.hh"
 #include "G4VPhysicalVolume.hh"
@@ -23,7 +24,7 @@ public:
 
 private:
     //Solid
-    G4Box *fScint_Sol;
+    G4SubtractionSolid *fScint_Sol;
     G4Box *fmother_Sol;
 
     //LogicalVolume
