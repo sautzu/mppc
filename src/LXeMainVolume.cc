@@ -177,7 +177,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 		for(int i=0;i<mppc_num;i++){
 		  enve_posi_x[i] = scint_posi_x[i];
 		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
-		  enve_posi_z[i] = (-1+i)*fScint_z;
+		  enve_posi_z[i] = (-1+i)*fScint_z + dx;
 		}
 	}
 	
@@ -375,18 +375,18 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
   new G4PVPlacement(0,radi_posi,fRadiation_log,"radiation",fSource_log,false,0);
 	
 	//scintillator(複数個)
-	//for(int i=0;i<scint_num;i++){
-	//  fScint_vol[i] = new G4PVPlacement(0,{scint_posi_x[i],scint_posi_y[i],scint_posi_z[i]},fScint_log,"scintillator",fGlice_log,false,0);
-	//}  
+	for(int i=0;i<scint_num;i++){
+	  fScint_vol[i] = new G4PVPlacement(0,{scint_posi_x[i],scint_posi_y[i],scint_posi_z[i]},fScint_log,"scintillator",fGlice_log,false,0);
+	}  
 
 	//scintillator(大きいの)
-	fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlicebig_log,false,0);
+	//fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlicebig_log,false,0);
 
 
 	//glice(複数個)
-	//fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
+	fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
 	//glice(大きいの)
-	fGlicebig_vol = new G4PVPlacement(0,glice_posi,fGlicebig_log,"glice",fAir_in_log,false,0);
+	//fGlicebig_vol = new G4PVPlacement(0,glice_posi,fGlicebig_log,"glice",fAir_in_log,false,0);
 	
 	
 	//collimator
@@ -438,10 +438,10 @@ void LXeMainVolume::CopyValues(){
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void LXeMainVolume::VisAttributes(){
-	//G4VisAttributes* scint_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
-	//fScint_log->SetVisAttributes(scint_va);
-	G4VisAttributes* scintbig_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
-	fScintbig_log->SetVisAttributes(scintbig_va);
+	G4VisAttributes* scint_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
+	fScint_log->SetVisAttributes(scint_va);
+	//G4VisAttributes* scintbig_va = new G4VisAttributes(G4Colour(0.8,0.8,0.2));
+	//fScintbig_log->SetVisAttributes(scintbig_va);
 	G4VisAttributes* mppc_va = new G4VisAttributes(G4Colour(0.2,0.4,0.2));
 	fMPPC_log->SetVisAttributes(mppc_va);
 	G4VisAttributes* win_va = new G4VisAttributes(G4Colour(0.4,0.4,0.6));
@@ -520,7 +520,7 @@ void LXeMainVolume::SurfaceProperties(){
   new G4LogicalBorderSurface("GAGG_surf",fScint_vol[i],fAir_vol,GAGG_Surface);
 	}
   
-  new G4LogicalBorderSurface("GAGG_surf",fScintbig_vol,fAir_vol,GAGG_Surface);
+  //new G4LogicalBorderSurface("GAGG_surf",fScintbig_vol,fAir_vol,GAGG_Surface);
 
   //**CsIの反射設定 (CsI周り)
 //	G4double CsI_RIND[] = {1.0,1.0};
@@ -557,7 +557,7 @@ void LXeMainVolume::SurfaceProperties(){
     new G4OpticalSurface("GliceSurface",glisur,groundbackpainted,dielectric_dielectric);
 	Glice_Surface->SetMaterialPropertiesTable(Glice_PT);
 
-  new G4LogicalBorderSurface("Glice_surf",fGlicebig_vol,fAir_vol,Glice_Surface);
+  new G4LogicalBorderSurface("Glice_surf",fGlice_vol,fAir_vol,Glice_Surface);
 
   //**Windowの反射設定 (Envelope周り)
          G4double Window_RIND[] = {1.0,1.0};
