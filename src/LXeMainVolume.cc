@@ -142,12 +142,12 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	scint_posi_x[1]=0.;
 	scint_posi_y[1]=-d/2;
-	scint_posi_z[1]=fScint_z+d;
+	scint_posi_z[1]=fScint_z+d+1.9*mm;
 
 
     scint_posi_x[2]=0.;
     scint_posi_y[2]=-d/2;
-	scint_posi_z[2]=-fScint_z-d;
+	scint_posi_z[2]=-fScint_z-d-1.9*mm;
 
 
  //Scint(大きいの１つ)
@@ -177,7 +177,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 		for(int i=0;i<mppc_num;i++){
 		  enve_posi_x[i] = scint_posi_x[i];
 		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
-		  enve_posi_z[i] = (-1+i)*fScint_z + dx;
+		  enve_posi_z[i] = scint_posi_z[i]+dx;
 		}
 	}
 	
@@ -339,7 +339,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 //  fWood2_box 		= new G4Box("wood_box",wood_height/2. - wood_width/2.,wood_height/2. - wood_width/2.,wood_width/2.); //追加
   fFe_box 		= new G4Box("fe_box",fe_height/2.,fe_width/2.*mm,120./2.);
 //  fGlice_box 		= new G4Box("glice_box",num*fScint_x/2.+(num-1.)*d/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
-  fGlice_box 		= new G4Box("glice_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
+  fGlice_box 		= new G4Box("glice_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.+1.9*mm);
   fGlicebig_box		= new G4Box("glicebig_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
   fAir_box 	= new G4Box("air_box",air_x/2.,air_y/2.,air_z/2.);
   fAir_in_box 	= new G4Box("air_in_box",air_in_x/2.,air_in_y/2.,air_in_z/2.);
@@ -352,6 +352,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
   fSup_box	= new G4Box("Sup_box",sup_yoko/2.,sup_height/2.,sup_width/2.);
   fRadiation	= new G4Tubs("radi_tub",0,radi_radius,radi_width/2.,0.*degree,360.*degree);
   fRadi_case	= new G4Tubs("radi_tub",0,radi_case_radius,radi_case_width/2.,0.*degree,360.*degree);
+  G4Box *fGuide_box = new G4Box("Guide",fScint_x/2.,fScint_y/2.+0.2/2.,1.7*mm/2.);
 
 	fAir_log = new G4LogicalVolume(fAir_box,	G4Material::GetMaterial("Air"),	"scint_log", 0,0,0);
 	fAir_in_log = new G4LogicalVolume(fAir_in_box,	G4Material::GetMaterial("Air"),	"scint_log", 0,0,0);
@@ -370,6 +371,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	fSup_log = new G4LogicalVolume(fSup_box,	G4Material::GetMaterial("Al2"),	"sup_log",0,0,0);
 	fSource_log = new G4LogicalVolume(fRadi_case,	G4Material::GetMaterial("PMMA"),	"source_log", 0,0,0);
 	fRadiation_log = new G4LogicalVolume(fRadiation,	G4Material::GetMaterial("Air"),	"radiation_log", 0,0,0);
+  G4LogicalVolume* fGuide_log = new G4LogicalVolume(fGuide_box, G4Material::GetMaterial("PMMA"), "Guide_log", 0, 0, 0);
 
 
   new G4PVPlacement(0,radi_posi,fRadiation_log,"radiation",fSource_log,false,0);
@@ -382,7 +384,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	//scintillator(大きいの)
 	//fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlicebig_log,false,0);
 
-
+	fGuide_vol[0] = new G4PVPlacement(0, {0, 0, fScint_z / 2. + 2.1 / 2.},fGuide_log, "guide", fGlice_log, false, 0);
+	fGuide_vol[1] = new G4PVPlacement(0, {0, 0, -1*(fScint_z / 2. + 2.1 / 2.)},fGuide_log, "guide", fGlice_log, false, 0);
 	//glice(複数個)
 	fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
 	//glice(大きいの)
@@ -519,6 +522,8 @@ void LXeMainVolume::SurfaceProperties(){
   for(int i=0;i<scint_num;i++){
   new G4LogicalBorderSurface("GAGG_surf",fScint_vol[i],fAir_vol,GAGG_Surface);
 	}
+  new G4LogicalBorderSurface("GAGG_surf",fGuide_vol[0],fAir_vol,GAGG_Surface);
+  new G4LogicalBorderSurface("GAGG_surf",fGuide_vol[1],fAir_vol,GAGG_Surface);
   
   //new G4LogicalBorderSurface("GAGG_surf",fScintbig_vol,fAir_vol,GAGG_Surface);
 

@@ -254,10 +254,10 @@ void LXeDetectorConstruction::DefineMaterials(){
 
 	//***PMMA***
 	//屈折率
- // pmma_mt = new G4MaterialPropertiesTable();
- // pmma_mt->AddProperty("ABSLENGTH",photon_energy,ptfe_ABSL,num);
- // pmma_mt->AddProperty("RINDEX",photon_energy,pmma_RIND,num);
- // fPMMA->SetMaterialPropertiesTable(pmma_mt);
+  pmma_mt = new G4MaterialPropertiesTable();
+  pmma_mt->AddProperty("ABSLENGTH",photon_energy,ptfe_ABSL,num);
+  pmma_mt->AddProperty("RINDEX",photon_energy,pmma_RIND,num);
+  fPMMA->SetMaterialPropertiesTable(pmma_mt);
 
 	//***SILICONE***
 	//屈折率

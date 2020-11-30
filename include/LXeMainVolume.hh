@@ -145,7 +145,8 @@ class LXeMainVolume : public G4PVPlacement
     // Physical volumes
 		G4VPhysicalVolume* fScint_vol[3];
 		G4VPhysicalVolume* fScintbig_vol;
-		G4VPhysicalVolume* fGlice_vol;
+    G4VPhysicalVolume *fGuide_vol[2];
+    G4VPhysicalVolume* fGlice_vol;
 		G4VPhysicalVolume* fGlicebig_vol;
 		G4VPhysicalVolume* fGlice2_vol;
 		G4VPhysicalVolume* fGlice3_vol;
