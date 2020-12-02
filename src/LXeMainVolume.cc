@@ -42,6 +42,7 @@
 G4double m_posi = 3.0*mm;
 G4double x_posi = 0.0*mm;
 G4double z_posi = 0.0*mm;
+G4double dx = 0.0 * mm;	//コリメーターの中心からのずれ
 G4bool colli = false;
 const G4int scint_num = 3;
 const G4int scintsq_num = 3;
@@ -169,7 +170,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 		for(int i=0;i<mppc_num;i++){
 		  enve_posi_x[i] = scint_posi_x[i];
 		  enve_posi_y[i] = fScint_y/2. + d/2. + enve_width/2. + win_width;
-		  enve_posi_z[i] = scint_posi_z[i];
+		  enve_posi_z[i] = scint_posi_z[i]+dx;
 	      	}
 	}
 	else{
@@ -294,7 +295,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 
  	//Glice	
-	G4ThreeVector glice_posi(X,0.,Z);
+	G4ThreeVector glice_posi(X,0.,Z+dx);
 
 
 
