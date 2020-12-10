@@ -11,14 +11,21 @@ VolumeScint::VolumeScint()
     fScint_x = 30.0 * mm;
     fScint_y = 5.0 * mm;
     fScint_z = 30.0 * mm;
-	G4RotationMatrix *rm1 = new G4RotationMatrix();
-	rm1->rotateY(-30. * deg);
+    G4RotationMatrix *rm1 = new G4RotationMatrix();
+    rm1->rotateY(30. * deg);
+    G4RotationMatrix *rm2 = new G4RotationMatrix();
+    rm2->rotateY(-30. * deg);
 
     G4Box *box = new G4Box("Scint_box", fScint_x / 2, fScint_y / 2, fScint_z / 2);
-    fScint_Sol = new G4SubtractionSolid("Scint_A", box, box, rm1, {10. * mm, 0, 0});
+    G4Box *box2 = new G4Box("Scint_box", fScint_x, fScint_y, fScint_z);
+    G4SubtractionSolid *fScint_Sol1 = new G4SubtractionSolid("Scint_A", box, box2, rm1, {-15. * mm + sin(M_PI * 75. / 180.) * 30. * sqrt(2), 0, -15. * mm - cos(M_PI * 75. / 180.) * 30. * sqrt(2)});
+    fScint_Sol = new G4SubtractionSolid("Scint_A", fScint_Sol1, box2, rm2, {-15. * mm + sin(M_PI * 75. / 180.) * 30. * sqrt(2), 0, 15. * mm + cos(M_PI * 75. / 180.) * 30. * sqrt(2)});
     fmother_Sol = new G4Box("Scint_mother", fScint_x / 2, fScint_y / 2, fScint_z / 2);
 
     fScint_log = new G4LogicalVolume(fScint_Sol, G4Material::GetMaterial("GAGG"), "Scint", 0, 0, 0);
+    fmother_log = new G4LogicalVolume(fScint_Sol, G4Material::GetMaterial("Silica"), "Scint_mother", 0, 0, 0);
+
+    fScint_phy = new G4PVPlacement(0, G4ThreeVector(), fScint_log, "Scint", fmother_log, false, 0);
 }
 
 G4LogicalVolume *VolumeScint::getLogicalVolume()
