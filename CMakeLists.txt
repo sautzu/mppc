@@ -46,6 +46,7 @@ set(LXe_SCRIPTS
     cerenkov.mac
     photon.mac
     reviewEvent.mac
+    parallel.sh
 		wls.mac
     gui.mac
     vis.mac

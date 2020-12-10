@@ -54,6 +54,8 @@
 #include "G4UIExecutive.hh"
 #endif
 
+extern G4String resultFile;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 int main(int argc, char** argv)
@@ -96,8 +98,15 @@ int main(int argc, char** argv)
 #endif
   }
   else{
+    G4String filename;
+    if(argc==3){  //出力されるファイル名を引数から受け取る
+      resultFile = argv[1];
+      filename = argv[2];
+    }
+    else {
+      filename = argv[1];
+    }
     G4String command = "/control/execute ";
-    G4String filename = argv[1];
     UImanager->ApplyCommand(command+filename);
   }
 

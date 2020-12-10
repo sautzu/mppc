@@ -51,7 +51,9 @@
 #include <iostream>
 #include <fstream>
 
-int eventnumber = 0; 
+G4String resultFile = "../result/test.txt";
+
+int eventnumber = 0;
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 LXeEventAction::LXeEventAction(LXeRecorderBase* r)
@@ -163,7 +165,7 @@ void LXeEventAction::EndOfEventAction(const G4Event* anEvent){
 
 	if(TotalCount!=0){
 	//if(EDEP!=0){
-		std::ofstream ofs1("../result/test.txt",std::ios::out | std::ios::app);
+		std::ofstream ofs1(resultFile,std::ios::out | std::ios::app);
 		//EDEP = EDEP/2.; //EDEPは2回カウントしてるみたい
 		//EDEP = CLHEP::RandGauss::shoot(EDEP,0.1*EDEP);
 		ofs1 
