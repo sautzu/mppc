@@ -43,6 +43,7 @@ G4double m_posi = 3.0*mm;
 G4double x_posi = 0.0*mm;
 G4double z_posi = 0.0*mm;
 G4double dx = 0.0 * mm;	//コリメーターの中心からのずれ
+G4double d_guide = 5.*mm;	//ライトガイドの厚さ
 G4bool colli = false;
 const G4int scint_num = 3;
 const G4int scintsq_num = 3;
@@ -142,12 +143,12 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	scint_posi_x[1]=0.;
 	scint_posi_y[1]=-d/2;
-	scint_posi_z[1]=fScint_z+d+1.9*mm;
+	scint_posi_z[1]=fScint_z+d+d_guide;
 
 
     scint_posi_x[2]=0.;
     scint_posi_y[2]=-d/2;
-	scint_posi_z[2]=-fScint_z-d-1.9*mm;
+	scint_posi_z[2]=-fScint_z-d-d_guide;
 
 
  //Scint(大きいの１つ)
@@ -339,7 +340,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 //  fWood2_box 		= new G4Box("wood_box",wood_height/2. - wood_width/2.,wood_height/2. - wood_width/2.,wood_width/2.); //追加
   fFe_box 		= new G4Box("fe_box",fe_height/2.,fe_width/2.*mm,120./2.);
 //  fGlice_box 		= new G4Box("glice_box",num*fScint_x/2.+(num-1.)*d/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
-  fGlice_box 		= new G4Box("glice_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.+1.9*mm);
+  fGlice_box 		= new G4Box("glice_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.+d_guide);
   fGlicebig_box		= new G4Box("glicebig_box",fScint_x/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
   fAir_box 	= new G4Box("air_box",air_x/2.,air_y/2.,air_z/2.);
   fAir_in_box 	= new G4Box("air_in_box",air_in_x/2.,air_in_y/2.,air_in_z/2.);
@@ -352,7 +353,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
   fSup_box	= new G4Box("Sup_box",sup_yoko/2.,sup_height/2.,sup_width/2.);
   fRadiation	= new G4Tubs("radi_tub",0,radi_radius,radi_width/2.,0.*degree,360.*degree);
   fRadi_case	= new G4Tubs("radi_tub",0,radi_case_radius,radi_case_width/2.,0.*degree,360.*degree);
-  G4Box *fGuide_box = new G4Box("Guide",fScint_x/2.,fScint_y/2.+0.2/2.,1.7*mm/2.);
+  G4Box *fGuide_box = new G4Box("Guide",fScint_x/2.,fScint_y/2.+0.2/2.,d_guide/2.);
 
 	fAir_log = new G4LogicalVolume(fAir_box,	G4Material::GetMaterial("Air"),	"scint_log", 0,0,0);
 	fAir_in_log = new G4LogicalVolume(fAir_in_box,	G4Material::GetMaterial("Air"),	"scint_log", 0,0,0);
@@ -384,8 +385,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	//scintillator(大きいの)
 	//fScintbig_vol = new G4PVPlacement(0,{scintbig_posi_x,scintbig_posi_y,scintbig_posi_z},fScintbig_log,"scintillatorbig",fGlicebig_log,false,0);
 
-	fGuide_vol[0] = new G4PVPlacement(0, {0, 0, fScint_z / 2. + 2.1 / 2.},fGuide_log, "guide", fGlice_log, false, 0);
-	fGuide_vol[1] = new G4PVPlacement(0, {0, 0, -1*(fScint_z / 2. + 2.1 / 2.)},fGuide_log, "guide", fGlice_log, false, 0);
+	fGuide_vol[0] = new G4PVPlacement(0, {0, 0, fScint_z / 2. + (d+d_guide) / 2.},fGuide_log, "guide", fGlice_log, false, 0);
+	fGuide_vol[1] = new G4PVPlacement(0, {0, 0, -1*(fScint_z / 2. + (d+d_guide) / 2.)},fGuide_log, "guide", fGlice_log, false, 0);
 	//glice(複数個)
 	fGlice_vol = new G4PVPlacement(0,glice_posi,fGlice_log,"glice",fAir_in_log,false,0);
 	//glice(大きいの)
