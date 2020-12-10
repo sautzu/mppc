@@ -30,11 +30,11 @@ VolumeMPPC::VolumeMPPC()
     fEnve_log = new G4LogicalVolume(fEnve_box, G4Material::GetMaterial("ABS"), "enve_log", 0, 0, 0);
 
     //MPPC全体の定義
-    G4ThreeVector MPPC_posi(0, 0, 1.025 * mm);
+    G4ThreeVector MPPC_posi(0, 0, 0.025 * mm);
     G4ThreeVector win_posi(0, 0, 1.0 * mm);
 
     fWin_phy = new G4PVPlacement(0, win_posi, fWin_log, "Window", fEnve_log, false, 0);
-    fMPPC_phy = new G4PVPlacement(0, MPPC_posi, fMPPC_log, "MPPC", fEnve_log, false, 1);
+    fMPPC_phy = new G4PVPlacement(0, MPPC_posi, fMPPC_log, "MPPC", fWin_log, false, 1);
     fEnve_phy = new G4PVPlacement(0, G4ThreeVector(), fEnve_log, "Enve", 0, false, 0);
 }
 
