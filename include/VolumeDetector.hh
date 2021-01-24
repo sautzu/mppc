@@ -31,15 +31,23 @@ public:
 private:
     G4double d; //グリスの厚さ
     G4Box *fmother_Sol;
+    G4Box *fGlice_Sol1; //シンチレーター間のグリス
+    G4Box *fGlice_Sol2; //シンチレーターとMPPC間のグリス
     std::unique_ptr<VolumeMPPC> mppc;
     std::unique_ptr<VolumeScint> scint;
 
     //LogicalVolume
+    G4LogicalVolume *fGlice_log1;
+    G4LogicalVolume *fGlice_log2;
+    G4LogicalVolume *fAir_log;
     G4LogicalVolume *fmother_log;
 
     //PhysicalVolume
-    std::vector<G4PVPlacement*> mppc_phy;
-    std::vector<G4PVPlacement*> scint_phy;
+    std::vector<G4PVPlacement *> mppc_phy;
+    std::vector<G4PVPlacement *> scint_phy;
+    std::vector<G4PVPlacement *> glice_phy1;
+    std::vector<G4PVPlacement *> glice_phy2;
+    G4PVPlacement *fAir_phy;
 
     G4VisAttributes *Scint_va;
 };

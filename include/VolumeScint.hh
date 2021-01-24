@@ -17,7 +17,7 @@ public:
     //可視化
     void VisAttributes();
     //境界の反射
-    void SurfaceProperties(G4VPhysicalVolume *fAir_phy);
+    void SurfaceProperties(G4VPhysicalVolume *fAir_phy,G4VPhysicalVolume *fScint_phy);
     //測定部分のLogicalVolumeを返す
     G4LogicalVolume *getScintLogical();
 
