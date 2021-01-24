@@ -16,14 +16,11 @@ VolumeScint::VolumeScint()
     fmother_Sol = new G4Box("Scint_mother", fScint_x / 2, fScint_y / 2, fScint_z / 2);
 
     fScint_log = new G4LogicalVolume(fScint_Sol, G4Material::GetMaterial("GAGG"), "Scint", 0, 0, 0);
-    fmother_log = new G4LogicalVolume(fmother_Sol, G4Material::GetMaterial("Air"), "Scint_mother", 0, 0, 0);
-
-    fScint_phy = new G4PVPlacement(0, G4ThreeVector(), fScint_log, "Scint", fmother_log, false, 0);
 }
 
 G4LogicalVolume *VolumeScint::getLogicalVolume()
 {
-    return fmother_log;
+    return fScint_log;
 }
 
 void VolumeScint::VisAttributes()
@@ -32,7 +29,7 @@ void VolumeScint::VisAttributes()
     fScint_log->SetVisAttributes(Scint_va);
 }
 
-void VolumeScint::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
+void VolumeScint::SurfaceProperties(G4VPhysicalVolume *fAir_phy,G4VPhysicalVolume *fScint_phy)
 {
     //エネルギーごとに光学的なパラメータを指定できる
     G4double ephoton[] = {2.76 * eV, 3.06 * eV};

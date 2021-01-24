@@ -42,10 +42,6 @@ G4double m_posi = 3.0 * mm;
 G4double x_posi = 0.0 * mm;
 G4double z_posi = 0.0 * mm;
 G4bool colli = false;
-const G4int scint_num = 1;
-const G4int scintsq_num = 1;
-const G4int mppc_num = 1;
-G4double si = 5.;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -99,27 +95,10 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	G4double sup_height = 240. * mm;
 	G4double sup_yoko = 150. * mm;
 
-	// The number of scintirator
-	G4double num = scintsq_num;
 	G4double d = 0.2;
-	G4double X = 0. * mm;
-	G4double Z = 0. * mm;
-
 	G4double slide = 70. * mm;
 	//	G4double slide = -colli_width+70.*mm;
 	// Logic Position
-
-	//Scint(複数個)
-	G4double scint_posi_x[scint_num];
-	G4double scint_posi_y[scint_num];
-	G4double scint_posi_z[scint_num];
-
-	for (auto i = 0; i < scint_num; i++)
-	{
-		scint_posi_x[i] = 0.;
-		scint_posi_y[i] = -d / 2.;
-		scint_posi_z[i] = i * (fScint_z + d);
-	}
 
 	// Collimator
 	G4double colli_posi_x = x_posi;
@@ -159,9 +138,6 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	// center
 	G4ThreeVector center_posi(0, 0, 0);
 
-	//Glice
-	G4ThreeVector glice_posi(X, 0., Z);
-
 	// Collimator
 	G4ThreeVector colli_posi(colli_posi_x, colli_posi_y, colli_posi_z);
 
@@ -198,9 +174,6 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	//  fWood1_box 		= new G4Box("wood_box",wood_width/2.,wood_height/2. - wood_width/2.,wood_height/2. - wood_width/2.); //追加
 	//  fWood2_box 		= new G4Box("wood_box",wood_height/2. - wood_width/2.,wood_height/2. - wood_width/2.,wood_width/2.); //追加
 	fFe_box = new G4Box("fe_box", fe_height / 2., fe_width / 2. * mm, 120. / 2.);
-	//  fGlice_box 		= new G4Box("glice_box",num*fScint_x/2.+(num-1.)*d/2.,d/2.+fScint_y/2.,num*fScint_z/2.+(num-1.)*d/2.);
-	fGlice_box = new G4Box("glice_box", fScint_x / 2., d / 2. + fScint_y / 2., num * fScint_z / 2. + (num - 1.) * d / 2.);
-	fGlicebig_box = new G4Box("glicebig_box", num * fScint_x / 2. + (num - 1.) * d / 2., d / 2. + fScint_y / 2., num * fScint_z / 2. + (num - 1.) * d / 2.);
 	fAir_box = new G4Box("air_box", air_x / 2., air_y / 2., air_z / 2.);
 	fAir_in_box = new G4Box("air_in_box", air_in_x / 2., air_in_y / 2., air_in_z / 2.);
 	fCollimator = new G4Cons("colli_con", colli_s_radius, colli_radius, colli_l_radius, colli_radius, colli_width / 2., 0. * degree, 360. * degree);
@@ -214,8 +187,6 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	//	fWood1_log = new G4LogicalVolume(fWood1_box,	G4Material::GetMaterial("Wood"),	"wood_log", 0,0,0);
 	//	fWood2_log = new G4LogicalVolume(fWood2_box,	G4Material::GetMaterial("Wood"),	"wood_log", 0,0,0);
 	fFe_log = new G4LogicalVolume(fFe_box, G4Material::GetMaterial("Al2"), "fe_log", 0, 0, 0);
-	fGlice_log = new G4LogicalVolume(fGlice_box, G4Material::GetMaterial("Silica"), "glice_log", 0, 0, 0);
-	//	fGlicebig_log = new G4LogicalVolume(fGlicebig_box,	G4Material::GetMaterial("Silica"),	"glicebig_log", 0,0,0);
 	fCollimator_log = new G4LogicalVolume(fCollimator, G4Material::GetMaterial("Pb"), "colli_log", 0, 0, 0);
 	fSup_log = new G4LogicalVolume(fSup_box, G4Material::GetMaterial("Al2"), "sup_log", 0, 0, 0);
 	fSource_log = new G4LogicalVolume(fRadi_case, G4Material::GetMaterial("PMMA"), "source_log", 0, 0, 0);
@@ -223,10 +194,9 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	new G4PVPlacement(0, radi_posi, fRadiation_log, "radiation", fSource_log, false, 0);
 
-	//glice(複数個)
-	fGlice_vol = new G4PVPlacement(0, glice_posi, fGlice_log, "glice", fAir_in_log, false, 0);
-	//	//glice(大きいの)
-	//	fGlicebig_vol = new G4PVPlacement(0,glice_posi,fGlicebig_log,"glice",fAir_in_log,false,0);
+	G4ThreeVector detector_posi(0, 40. * mm - 2.6 * mm, 0);
+	detector_vol.reset(new VolumeDetector());
+	fDetector_vol = new G4PVPlacement(0, detector_posi, detector_vol->getLogicalVolume(), "Detector", fAir_in_log, false, 0, false);
 
 	//collimator
 	//if(colli)
@@ -247,21 +217,6 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	//the "photocathode" is a metal slab at the back of the epoxy that
 	//is only a very rough approximation of the real thing since it only
 	//absorbs or detects the photons based on the efficiency set below
-	G4ThreeVector mppc_posi(0, 1.05 * mm + 2.6 * mm, 0);
-	G4RotationMatrix *rm_mppc = new G4RotationMatrix();
-	rm_mppc->rotateX(-90. * deg);
-	mppc_vol.reset(new VolumeMPPC());
-	G4PVPlacement *mppc_place = new G4PVPlacement(rm_mppc, mppc_posi, mppc_vol->getLogicalVolume(), "MPPC", fAir_in_log, false, 0, false);
-	mppc_vol->VisAttributes();
-	mppc_vol->SurfaceProperties();
-
-	//シンチレータの設置
-	fScint_log.reset(new VolumeScint);
-	for (auto i = 0; i < scint_num; i++)
-	{
-		G4PVPlacement *fScint_place = new G4PVPlacement(0, G4ThreeVector(scint_posi_x[i], scint_posi_y[i], scint_posi_z[i]), fScint_log->getLogicalVolume(), "Scint", fAir_in_log, false, i + 1, false);
-	}
-
 	fAir_vol = new G4PVPlacement(0, center_posi, fAir_in_log, "airin", fAir_log, false, 8);
 
 	VisAttributes();
@@ -284,7 +239,7 @@ void LXeMainVolume::CopyValues()
 
 void LXeMainVolume::VisAttributes()
 {
-	fScint_log->VisAttributes();
+	detector_vol->VisAttributes();
 	G4VisAttributes *colli_va = new G4VisAttributes(G4Colour(0.4, 0.4, 0.6));
 	fCollimator_log->SetVisAttributes(colli_va);
 	G4VisAttributes *radi_va = new G4VisAttributes(G4Colour(0.8, 0.8, 0.8));
@@ -333,25 +288,6 @@ void LXeMainVolume::SurfaceProperties()
 	//  }
 	//  new G4LogicalBorderSurface("GSO_surf",fScintbig_vol,fAir_vol,GSO_Surface);
 
-	//**GAGGの反射設定 (GAGG周り)
-	G4double GAGG_RIND[] = {1.0, 1.0};
-	G4double GAGG_REF[] = {1.0, 1.0};
-	G4double GAGG2_RIND[] = {1.0, 1.0};
-	G4double GAGG2_REF[] = {1.0, 1.0};
-
-	G4MaterialPropertiesTable *GAGG_PT = new G4MaterialPropertiesTable();
-	G4MaterialPropertiesTable *GAGG2_PT = new G4MaterialPropertiesTable();
-
-	GAGG_PT->AddProperty("RINDEX", ephoton, GAGG_RIND, num);
-	GAGG_PT->AddProperty("REFLECTIVITY", ephoton, GAGG_REF, num);
-	GAGG2_PT->AddProperty("RINDEX", ephoton, GAGG2_RIND, num);
-	GAGG2_PT->AddProperty("REFLECTIVITY", ephoton, GAGG2_REF, num);
-
-	G4OpticalSurface *GAGG_Surface = new G4OpticalSurface("GAGGSurface", glisur, groundbackpainted, dielectric_dielectric);
-	GAGG_Surface->SetMaterialPropertiesTable(GAGG_PT);
-	G4OpticalSurface *GAGG2_Surface = new G4OpticalSurface("GAGG2Surface", glisur, polished, dielectric_dielectric);
-	GAGG2_Surface->SetMaterialPropertiesTable(GAGG2_PT);
-
 	//**CsIの反射設定 (CsI周り)
 	//	G4double CsI_RIND[] = {1.0,1.0};
 	//	G4double CsI_REF[] = {1.0,1.0};
@@ -377,16 +313,5 @@ void LXeMainVolume::SurfaceProperties()
 	//
 	//  new G4LogicalBorderSurface("CsI_surf",fScintbig_vol,fAir_vol,CsI_Surface);
 
-	fScint_log->SurfaceProperties(fAir_vol);
-	//**Gliceの反射設定 (GSO周り)
-	G4double Glice_RIND[] = {1.0, 1.0};
-	G4double Glice_REF[] = {1.0, 1.0};
-	G4MaterialPropertiesTable *Glice_PT = new G4MaterialPropertiesTable();
-	Glice_PT->AddProperty("RINDEX", ephoton, Glice_RIND, num);
-	Glice_PT->AddProperty("REFLECTIVITY", ephoton, Glice_REF, num);
-	G4OpticalSurface *Glice_Surface =
-		new G4OpticalSurface("GliceSurface", glisur, groundbackpainted, dielectric_dielectric);
-	Glice_Surface->SetMaterialPropertiesTable(Glice_PT);
-
-	new G4LogicalBorderSurface("Glice_surf", fGlice_vol, fAir_vol, Glice_Surface);
+	detector_vol->SurfaceProperties(fAir_vol);
 }

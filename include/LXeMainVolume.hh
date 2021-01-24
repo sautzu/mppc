@@ -45,8 +45,7 @@
 #include "G4VPhysicalVolume.hh"
 
 #include "LXeDetectorConstruction.hh"
-#include "VolumeMPPC.hh"
-#include "VolumeScint.hh"
+#include "VolumeDetector.hh"
 
 class LXeMainVolume : public G4PVPlacement
 {
@@ -59,8 +58,8 @@ public:
                 LXeDetectorConstruction *c);
 
   //G4LogicalVolume* GetLogPhotoCath() {return fPmt_log;}
-  G4LogicalVolume *GetLogScint() { return fScint_log->getScintLogical(); }
-  G4LogicalVolume* GetLogMPPC() { return mppc_vol->getMPPCLogical(); }
+  G4LogicalVolume *GetLogScint() { return detector_vol->getScintLogical(); }
+  G4LogicalVolume* GetLogMPPC() { return detector_vol->getMPPCLogical(); }
 
   std::vector<G4ThreeVector> GetPmtPositions() { return fPmtPositions; }
 
@@ -79,7 +78,7 @@ private:
 
   LXeDetectorConstruction *fConstructor;
 
-  std::unique_ptr<VolumeMPPC> mppc_vol;
+  std::unique_ptr<VolumeDetector> detector_vol;
 
   G4double fScint_x;
   G4double fScint_y;
@@ -115,7 +114,6 @@ private:
   G4Tubs *fRadi_case;
 
   // Logical volumes
-  std::unique_ptr<VolumeScint> fScint_log;
   G4LogicalVolume *fWood_log;
   //    G4LogicalVolume* fWood1_log;
   //    G4LogicalVolume* fWood2_log;
@@ -142,6 +140,7 @@ private:
   G4VPhysicalVolume *fGlice2_vol;
   G4VPhysicalVolume *fGlice3_vol;
   G4VPhysicalVolume *fSup_vol;
+  G4VPhysicalVolume *fDetector_vol;
   G4VPhysicalVolume *fWindow1_vol;
   G4VPhysicalVolume *fWindow2_vol;
   G4VPhysicalVolume *fWindow3_vol;
