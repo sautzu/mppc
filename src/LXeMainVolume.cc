@@ -41,7 +41,7 @@
 G4double m_posi = 3.0 * mm;
 G4double x_posi = 0.0 * mm;
 G4double z_posi = 0.0 * mm;
-G4bool colli = false;
+G4double dx = 0.0 * mm; //コリメーターの中心からのずれ
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -102,7 +102,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	// Collimator
 	G4double colli_posi_x = x_posi;
-	G4double colli_posi_y = -0.01 - colli_width / 2. - d - fScint_y / 2.; //5.5*mm;
+	G4double colli_posi_y = -colli_width / 2. - d - fScint_y / 2.; //5.5*mm;
 	G4double colli_posi_z = z_posi;
 	// Wood1
 	G4double wood1_posi_x = 0. * mm;
@@ -114,8 +114,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 	G4double wood2_posi_z = 0. * mm;
 	// Fe1
 	G4double Fe1_posi_x = 0. * mm;
-	G4double Fe1_posi_y = -fScint_y / 2. - fe_width / 2. - 0.2 * mm;
-	//	G4double Fe1_posi_y = -fScint_y/2.-fe_width/2.-colli_width-0.2*mm;
+	//G4double Fe1_posi_y = -fScint_y / 2. - fe_width / 2. - 0.2 * mm;
+	G4double Fe1_posi_y = -fScint_y / 2. - fe_width / 2. - colli_width - d;
 	G4double Fe1_posi_z = 0. * mm;
 	// Fe2
 	G4double Fe2_posi_x = 0. * mm;
@@ -124,8 +124,8 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	// Source
 	G4double source_posi_x = x_posi;
-	G4double source_posi_y = wood1_posi_y + wood_width / 2. + radi_case_width / 2. + slide + 0.01;
-	//	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.;
+	//G4double source_posi_y = wood1_posi_y + wood_width / 2. + radi_case_width / 2. + slide + 0.01;
+	G4double source_posi_y = -colli_width - radi_case_width / 2. - fScint_y / 2. - fe_width - d;
 	//	G4double source_posi_y = -colli_width - radi_case_width/2. - fScint_y/2. - fe_width - d/2.-18.*mm;
 	//	G4double source_posi_y = wood1_posi_y + wood_width/2. + radi_case_width/2. + 0.01;//-0.02-d -fScint_y/2. -colli_width - radi_case_width/2.;//-colli_width + 5.5*mm + fScint_y/2. + fD_mtl + radi_case_width/2.;
 	G4double source_posi_z = z_posi;
@@ -151,7 +151,7 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	// Source
 	G4ThreeVector source_posi(source_posi_x, source_posi_y, source_posi_z);
-	G4ThreeVector radi_posi(0. * mm, 0. * mm, -radi_case_width / 3.);
+	G4ThreeVector radi_posi(0. * mm, 0. * mm, radi_case_width / 3.);
 
 	// Supporter
 	G4ThreeVector sup_posi(sup_posi_x, sup_posi_y, sup_posi_z);
@@ -194,13 +194,13 @@ LXeMainVolume::LXeMainVolume(G4RotationMatrix *pRot,
 
 	new G4PVPlacement(0, radi_posi, fRadiation_log, "radiation", fSource_log, false, 0);
 
-	G4ThreeVector detector_posi(0, 40. * mm - 2.6 * mm, 0);
+	G4ThreeVector detector_posi(0, 40. * mm - 2.6 * mm, dx);
 	detector_vol.reset(new VolumeDetector());
 	fDetector_vol = new G4PVPlacement(0, detector_posi, detector_vol->getLogicalVolume(), "Detector", fAir_in_log, false, 0, false);
 
 	//collimator
 	//if(colli)
-	//	new G4PVPlacement(rm_x1,colli_posi,fCollimator_log,"collimator",fAir_in_log,false,0);
+	new G4PVPlacement(rm_x1, colli_posi, fCollimator_log, "collimator", fAir_in_log, false, 0);
 	new G4PVPlacement(0, wood1_posi, fWood_log, "Wood", fAir_in_log, false, 0);
 	new G4PVPlacement(0, wood2_posi, fWood_log, "wood", fAir_in_log, false, 0);
 
