@@ -22,21 +22,19 @@ VolumeDetector::VolumeDetector()
     G4RotationMatrix *rm_mppc = new G4RotationMatrix();
     rm_mppc->rotateX(-90. * deg);
     //MPPCの配置
-    mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, -20. * mm - d}, mppc->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));
+    mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, -30. * mm - d}, mppc->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));
     mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, 0. * mm}, mppc->getLogicalVolume(), "MPPC_in_Detector2", fAir_log, false, 2));
-    mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, 20. * mm + d}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
+    mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, 30. * mm + d}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
 
     //グリスの配置
-    glice_phy1.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -10. * mm - d / 2.}, fGlice_log1, "glice_between_scint1", fAir_log, false, 1));
-    glice_phy1.push_back(new G4PVPlacement(0, {0, -37.5 * mm, 10. * mm + d / 2.}, fGlice_log1, "glice_between_scint2", fAir_log, false, 2));
-    glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, -20. * mm - d}, fGlice_log2, "glice_mppc1", fAir_log, false, 1));
+    glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, -30. * mm - d}, fGlice_log2, "glice_mppc1", fAir_log, false, 1));
     glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 0. * mm}, fGlice_log2, "glice_mppc2", fAir_log, false, 2));
-    glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 20. * mm + d}, fGlice_log2, "glice_mppc3", fAir_log, false, 3));
+    glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 30. * mm + d}, fGlice_log2, "glice_mppc3", fAir_log, false, 3));
 
     //シンチレーターの配置
-    scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -20. * mm - d}, scint->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));
+    scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -30. * mm - d}, scint->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));
     scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, 0 * mm}, scint->getLogicalVolume(), "MPPC_in_Detector2", fAir_log, false, 2));
-    scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, 20. * mm + d}, scint->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
+    scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, 30. * mm + d}, scint->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
 
     fAir_phy = new G4PVPlacement(0, G4ThreeVector(), fAir_log, "Detector_in_Air", fmother_log, false, 0);
 }
