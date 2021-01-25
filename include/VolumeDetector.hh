@@ -30,15 +30,18 @@ public:
 
 private:
     G4double d; //グリスの厚さ
+    G4double guide_width; //ライトガイドの厚さ
     G4Box *fmother_Sol;
     G4Box *fGlice_Sol1; //シンチレーター間のグリス
     G4Box *fGlice_Sol2; //シンチレーターとMPPC間のグリス
+    G4Box *fGuide_Sol; //ライトガイド
     std::unique_ptr<VolumeMPPC> mppc;
     std::unique_ptr<VolumeScint> scint;
 
     //LogicalVolume
     G4LogicalVolume *fGlice_log1;
     G4LogicalVolume *fGlice_log2;
+    G4LogicalVolume *fGuide_log;
     G4LogicalVolume *fAir_log;
     G4LogicalVolume *fmother_log;
 
@@ -47,6 +50,7 @@ private:
     std::vector<G4PVPlacement *> scint_phy;
     std::vector<G4PVPlacement *> glice_phy1;
     std::vector<G4PVPlacement *> glice_phy2;
+    std::vector<G4PVPlacement *> guide_phy;
     G4PVPlacement *fAir_phy;
 
     G4VisAttributes *Scint_va;
