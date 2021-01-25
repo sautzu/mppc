@@ -69,7 +69,7 @@ void VolumeMPPC::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
     G4MaterialPropertiesTable *Window_PT = new G4MaterialPropertiesTable();
     Window_PT->AddProperty("RINDEX", ephoton, Window_RIND, num);
     Window_PT->AddProperty("REFLECTIVITY", ephoton, Window_REF, num);
-    G4OpticalSurface *Window_Surface = new G4OpticalSurface("WindowSurface", glisur, groundbackpainted, dielectric_dielectric);
+    G4OpticalSurface *Window_Surface = new G4OpticalSurface("WindowSurface", unified, groundbackpainted, dielectric_dielectric);
     Window_Surface->SetMaterialPropertiesTable(Window_PT);
 
     G4LogicalBorderSurface *surface1 = new G4LogicalBorderSurface("Window_surf", fWin_phy, fEnve_phy, Window_Surface);

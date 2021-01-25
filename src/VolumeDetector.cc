@@ -70,7 +70,7 @@ void VolumeDetector::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
     G4MaterialPropertiesTable *Glice_PT = new G4MaterialPropertiesTable();
     Glice_PT->AddProperty("RINDEX", ephoton, Glice_RIND, num);
     Glice_PT->AddProperty("REFLECTIVITY", ephoton, Glice_REF, num);
-    G4OpticalSurface *Glice_Surface = new G4OpticalSurface("GliceSurface", glisur, groundbackpainted, dielectric_dielectric);
+    G4OpticalSurface *Glice_Surface = new G4OpticalSurface("GliceSurface", unified, groundbackpainted, dielectric_dielectric);
     Glice_Surface->SetMaterialPropertiesTable(Glice_PT);
 
     for (auto i : glice_phy1)
