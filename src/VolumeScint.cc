@@ -45,7 +45,7 @@ void VolumeScint::SurfaceProperties(G4VPhysicalVolume *fAir_phy,G4VPhysicalVolum
     GAGG_PT->AddProperty("RINDEX", ephoton, GAGG_RIND, num);
     GAGG_PT->AddProperty("REFLECTIVITY", ephoton, GAGG_REF, num);
 
-    G4OpticalSurface *GAGG_Surface = new G4OpticalSurface("GAGGSurface", glisur, groundbackpainted, dielectric_dielectric);
+    G4OpticalSurface *GAGG_Surface = new G4OpticalSurface("GAGGSurface", unified, groundbackpainted, dielectric_dielectric);
     GAGG_Surface->SetMaterialPropertiesTable(GAGG_PT);
 
     //空気とシンチレータの境界面
