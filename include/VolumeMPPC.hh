@@ -17,7 +17,7 @@ public:
     //可視化
     void VisAttributes();
     //境界の反射
-    void SurfaceProperties();
+    void SurfaceProperties(G4VPhysicalVolume*);
     //測定部分のLogicalVolumeを返す
     G4LogicalVolume *getMPPCLogical();
 

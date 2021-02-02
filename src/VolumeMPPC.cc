@@ -11,8 +11,8 @@ VolumeMPPC::VolumeMPPC()
     mppc_height = 3.0 * mm;
     mppc_width = 0.05 * mm;
 
-    win_longside = 5.0 * mm;
-    win_shortside = 5.0 * mm;
+    win_longside = 6.0 * mm;
+    win_shortside = 6.0 * mm;
     win_width = 0.1 * mm;
 
     enve_longside = 6.0 * mm;
@@ -58,7 +58,7 @@ void VolumeMPPC::VisAttributes()
     fEnve_log->SetVisAttributes(enve_va);
 }
 
-void VolumeMPPC::SurfaceProperties()
+void VolumeMPPC::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
 {
     G4double ephoton[] = {2.76 * eV, 3.06 * eV};
     const G4int num = sizeof(ephoton) / sizeof(G4double);
@@ -73,6 +73,7 @@ void VolumeMPPC::SurfaceProperties()
     Window_Surface->SetMaterialPropertiesTable(Window_PT);
 
     G4LogicalBorderSurface *surface1 = new G4LogicalBorderSurface("Window_surf", fWin_phy, fEnve_phy, Window_Surface);
+    new G4LogicalBorderSurface("Window_surf2", fWin_phy, fAir_phy, Window_Surface);
 
     //mppcの反射設定(光子感度)
     G4double MPPC_ReR[] = {1.92, 1.92};
