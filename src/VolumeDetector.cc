@@ -67,12 +67,18 @@ void VolumeDetector::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
     //**Gliceの反射設定
     G4double Glice_RIND[] = {1.0, 1.0};
     G4double Glice_REF[] = {1.0, 1.0};
+    G4double Glice_LOBE[] = {0.8, 0.8};
+    G4double Glice_SPIKE[] = {0., 0.};
+    G4double Glice_SCATTER[] = {0., 0.};
     G4MaterialPropertiesTable *Glice_PT = new G4MaterialPropertiesTable();
     Glice_PT->AddProperty("RINDEX", ephoton, Glice_RIND, num);
     Glice_PT->AddProperty("REFLECTIVITY", ephoton, Glice_REF, num);
+    Glice_PT->AddProperty("SPECULARLOBECONSTANT", ephoton, Glice_LOBE, num);
+    Glice_PT->AddProperty("SPECULARSPIKECONSTANT", ephoton, Glice_SPIKE, num);
+    Glice_PT->AddProperty("BACKSCATTERCONSTANT", ephoton, Glice_SCATTER, num);
     G4OpticalSurface *Glice_Surface = new G4OpticalSurface("GliceSurface", unified, groundbackpainted, dielectric_dielectric);
     Glice_Surface->SetMaterialPropertiesTable(Glice_PT);
-
+    Glice_Surface->SetSigmaAlpha(0.);
     for (auto i : glice_phy1)
     {
         new G4LogicalBorderSurface("Glice_surf", i, fAir_phy, Glice_Surface);
