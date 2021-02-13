@@ -67,8 +67,8 @@ void VolumeDetector::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
     //**Gliceの反射設定
     G4double Glice_RIND[] = {1.0, 1.0};
     G4double Glice_REF[] = {1.0, 1.0};
-    G4double Glice_LOBE[] = {0.8, 0.8};
-    G4double Glice_SPIKE[] = {0., 0.};
+    G4double Glice_LOBE[] = {0., 0.};
+    G4double Glice_SPIKE[] = {0.8, 0.8};
     G4double Glice_SCATTER[] = {0., 0.};
     G4MaterialPropertiesTable *Glice_PT = new G4MaterialPropertiesTable();
     Glice_PT->AddProperty("RINDEX", ephoton, Glice_RIND, num);

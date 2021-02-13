@@ -66,8 +66,8 @@ void VolumeMPPC::SurfaceProperties(G4VPhysicalVolume *fAir_phy)
     //Windowの反射設定
     G4double Window_RIND[] = {1.0, 1.0};
     G4double Window_REF[] = {1.0, 1.0};
-    G4double Window_LOBE[] = {0.8, 0.8};
-    G4double Window_SPIKE[] = {0., 0.};
+    G4double Window_LOBE[] = {0., 0.};
+    G4double Window_SPIKE[] = {0.8, 0.8};
     G4double Window_SCATTER[] = {0., 0.};
     G4MaterialPropertiesTable *Window_PT = new G4MaterialPropertiesTable();
     Window_PT->AddProperty("RINDEX", ephoton, Window_RIND, num);
