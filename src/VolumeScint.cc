@@ -39,14 +39,22 @@ void VolumeScint::SurfaceProperties(G4VPhysicalVolume *fAir_phy,G4VPhysicalVolum
     G4double GAGG_RIND[] = {1.0, 1.0};
     //反射率
     G4double GAGG_REF[] = {1.0, 1.0};
+    G4double GAGG_LOBE[] = {0., 0.};
+    G4double GAGG_SPIKE[] = {0., 0.};
+    G4double GAGG_SCATTER[] = {0., 0.};
+
 
     G4MaterialPropertiesTable *GAGG_PT = new G4MaterialPropertiesTable();
 
     GAGG_PT->AddProperty("RINDEX", ephoton, GAGG_RIND, num);
     GAGG_PT->AddProperty("REFLECTIVITY", ephoton, GAGG_REF, num);
+    GAGG_PT->AddProperty("SPECULARLOBECONSTANT", ephoton, GAGG_LOBE, num);
+    GAGG_PT->AddProperty("SPECULARSPIKECONSTANT", ephoton, GAGG_SPIKE, num);
+    GAGG_PT->AddProperty("BACKSCATTERCONSTANT", ephoton, GAGG_SCATTER, num);
 
     G4OpticalSurface *GAGG_Surface = new G4OpticalSurface("GAGGSurface", unified, groundbackpainted, dielectric_dielectric);
     GAGG_Surface->SetMaterialPropertiesTable(GAGG_PT);
+    GAGG_Surface->SetSigmaAlpha(0.);
 
     //空気とシンチレータの境界面
     new G4LogicalBorderSurface("GAGG_surf", fScint_phy, fAir_phy, GAGG_Surface);
