@@ -10,7 +10,7 @@ VolumeDetector::VolumeDetector()
     d = 0.2 * mm;
     fmother_Sol = new G4Box("Detector_Box", 100. * mm / 2., 80. * mm / 2., 100. * mm / 2.);
     fGlice_Sol1 = new G4Box("Glice_Box1", 20. * mm / 2., 5. * mm / 2., d / 2.);
-    fGlice_Sol2 = new G4Box("Glice_Box2", 20. * mm / 2., d / 2., 60.4 * mm / 2.);
+    fGlice_Sol2 = new G4Box("Glice_Box2", 6. * mm / 2., d / 2., 6. * mm / 2.);
 
     fmother_log = new G4LogicalVolume(fmother_Sol, G4Material::GetMaterial("Air"), "Detector_mother", 0, 0, 0);
     fAir_log = new G4LogicalVolume(fmother_Sol, G4Material::GetMaterial("Air"), "Detector_in_Air", 0, 0, 0);
@@ -29,9 +29,9 @@ VolumeDetector::VolumeDetector()
     //グリスの配置
     glice_phy1.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -10. * mm - d / 2.}, fGlice_log1, "glice_between_scint1", fAir_log, false, 1));
     glice_phy1.push_back(new G4PVPlacement(0, {0, -37.5 * mm, 10. * mm + d / 2.}, fGlice_log1, "glice_between_scint2", fAir_log, false, 2));
-    //glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, -20. * mm - d}, fGlice_log2, "glice_mppc1", fAir_log, false, 1));
+    glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, -20. * mm - d}, fGlice_log2, "glice_mppc1", fAir_log, false, 1));
     glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 0. * mm}, fGlice_log2, "glice_mppc2", fAir_log, false, 2));
-    //glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 20. * mm + d}, fGlice_log2, "glice_mppc3", fAir_log, false, 3));
+    glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 20. * mm + d}, fGlice_log2, "glice_mppc3", fAir_log, false, 3));
 
     //シンチレーターの配置
     scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -20. * mm - d}, scint->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));
