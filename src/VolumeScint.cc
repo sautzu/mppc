@@ -40,7 +40,7 @@ void VolumeScint::SurfaceProperties(G4VPhysicalVolume *fAir_phy,G4VPhysicalVolum
     //反射率
     G4double GAGG_REF[] = {1.0, 1.0};
     G4double GAGG_LOBE[] = {0., 0.};
-    G4double GAGG_SPIKE[] = {0.8, 0.8};
+    G4double GAGG_SPIKE[] = {0.95, 0.95};
     G4double GAGG_SCATTER[] = {0., 0.};
 
 
