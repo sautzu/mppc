@@ -47,6 +47,7 @@ set(LXe_SCRIPTS
     photon.mac
     reviewEvent.mac
     parallel.sh
+    child.sh
 		wls.mac
     gui.mac
     vis.mac
