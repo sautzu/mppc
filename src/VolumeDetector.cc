@@ -25,6 +25,9 @@ VolumeDetector::VolumeDetector()
     mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, -20. * mm - d}, mppc->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));
     mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, 0. * mm}, mppc->getLogicalVolume(), "MPPC_in_Detector2", fAir_log, false, 2));
     mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, 20. * mm + d}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
+    G4RotationMatrix *rm_mppc2 = new G4RotationMatrix();
+    rm_mppc2->rotateX(-180. * deg);
+    mppc_phy.push_back(new G4PVPlacement(rm_mppc2, {0, -40.0 * mm + 3. * mm, 30. * mm + 2 * d + 1.05 * mm}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
 
     //グリスの配置
     glice_phy1.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -10. * mm - d / 2.}, fGlice_log1, "glice_between_scint1", fAir_log, false, 1));
@@ -32,6 +35,9 @@ VolumeDetector::VolumeDetector()
     glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, -20. * mm - d}, fGlice_log2, "glice_mppc1", fAir_log, false, 1));
     glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 0. * mm}, fGlice_log2, "glice_mppc2", fAir_log, false, 2));
     glice_phy2.push_back(new G4PVPlacement(0, {0, -35. * mm + d / 2, 20. * mm + d}, fGlice_log2, "glice_mppc3", fAir_log, false, 3));
+    G4RotationMatrix *rm_glice = new G4RotationMatrix();
+    rm_glice->rotateX(-90. * deg);
+    glice_phy2.push_back(new G4PVPlacement(rm_glice, {0, -37. * mm, 30. * mm + d + d / 2.}, fGlice_log2, "glice_mppc3", fAir_log, false, 4));
 
     //シンチレーターの配置
     scint_phy.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -20. * mm - d}, scint->getLogicalVolume(), "MPPC_in_Detector1", fAir_log, false, 1));

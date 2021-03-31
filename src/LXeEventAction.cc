@@ -176,7 +176,7 @@ void LXeEventAction::EndOfEventAction(const G4Event* anEvent){
 << Photon_Sum[0] << " " 
 << Photon_Sum[1] << " " 
 << Photon_Sum[2] << " " 
-//<< Photon_Sum[3] << " " 
+<< Photon_Sum[3] << " " 
 //<< Photon_Sum[4] << " " 
 //<< Photon_Sum[5] << " " 
 //<< Photon_Sum[6] << " " 
