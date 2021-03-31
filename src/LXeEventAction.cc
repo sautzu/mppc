@@ -129,7 +129,7 @@ void LXeEventAction::EndOfEventAction(const G4Event* anEvent){
 		}
 	}
 	G4double EDEP = eventInformation->GetEDep() / keV ;
-	const G4int mppc_num = 3;
+	const G4int mppc_num = 4;
 	G4int Photon_Sum[mppc_num];
 	for(int i=0;i<mppc_num;i++)
 		Photon_Sum[i] = 0;
