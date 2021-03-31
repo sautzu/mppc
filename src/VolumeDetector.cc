@@ -27,7 +27,7 @@ VolumeDetector::VolumeDetector()
     mppc_phy.push_back(new G4PVPlacement(rm_mppc, {0, -33.95 * mm + d, 20. * mm + d}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
     G4RotationMatrix *rm_mppc2 = new G4RotationMatrix();
     rm_mppc2->rotateX(-180. * deg);
-    mppc_phy.push_back(new G4PVPlacement(rm_mppc2, {0, -40.0 * mm + 3. * mm, 30. * mm + 2 * d + 1.05 * mm}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 3));
+    mppc_phy.push_back(new G4PVPlacement(rm_mppc2, {0, -40.0 * mm + 3. * mm, 30. * mm + 2 * d + 1.05 * mm}, mppc->getLogicalVolume(), "MPPC_in_Detector3", fAir_log, false, 4));
 
     //グリスの配置
     glice_phy1.push_back(new G4PVPlacement(0, {0, -37.5 * mm, -10. * mm - d / 2.}, fGlice_log1, "glice_between_scint1", fAir_log, false, 1));
