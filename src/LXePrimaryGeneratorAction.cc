@@ -113,8 +113,7 @@ for(int i=0;i<1;i++){
 //	oF << runCounter << std::endl;
 //	oF.close();
 //
-
-  seed = seed + 1;
+    seed = seed + CLHEP::RandFlat::shootInt(long(0),long(100000000000));
 //        std::cout<<" "<< seed <<std::endl;
 	CLHEP::HepRandom::setTheSeed(seed);
 //	CLHEP::HepRandom::setTheSeed(1573110511);
